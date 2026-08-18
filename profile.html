@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ sơ cá nhân - UniMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+    <div id="navbar-placeholder"></div>
+
+    <div class="container py-4" style="max-width: 1000px;">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold"
+                onclick="window.location.href='home.html'">
+                Đăng xuất 🚪
+            </button>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-lg-4">
+                <div class="card p-4 text-center shadow-sm border-0">
+                    <div class="profile-avatar-lg fw-bold">VA</div>
+                    <h4 class="fw-bold text-dark mb-1">Nguyễn Văn A</h4>
+                    <p class="text-muted small mb-3">MSSV: 2300001234</p>
+
+                    <div class="badge badge-kyc rounded-pill px-3 py-2 d-inline-block mx-auto mb-3">
+                        ✔️ Tài khoản đã định danh E-KYC
+                    </div>
+
+                    <hr class="w-100">
+
+                    <div class="text-start w-100 small text-secondary">
+                        <div class="mb-2">📧 <strong>Email:</strong> vana@nttu.edu.vn</div>
+                        <div class="mb-2">🎓 <strong>Trường:</strong> ĐH Nguyễn Tất Thành</div>
+                        <div>📂 <strong>Chuyên ngành:</strong> Kỹ thuật Phần mềm</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+
+                <div class="card p-4 shadow-sm border-0 mb-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="fw-bold text-dark mb-0">🧬 Thói quen & Lối sống của tôi</h5>
+                        <button class="btn btn-sm btn-primary rounded-pill px-3 fw-bold"
+                            onclick="window.location.href='multiple_choice.html'">
+                            Làm lại trắc nghiệm 🔄
+                        </button>
+                    </div>
+                    <p class="text-muted small">Đây là các chỉ số thói quen được thuật toán AI dùng để đối chiếu điểm
+                        tương thích khi bạn đi tìm người ở ghép.</p>
+
+                    <div class="mt-3">
+                        <span class="trait-tag">🌙 Thức khuya (Cú đêm)</span>
+                        <span class="trait-tag">✨ Gọn gàng, sạch sẽ</span>
+                        <span class="trait-tag">🍳 Thích tự nấu ăn</span>
+                        <span class="trait-tag">🤫 Cần không gian yên tĩnh</span>
+                        <span class="trait-tag">🐾 Không nuôi thú cưng</span>
+                        <span class="trait-tag">🙅 Hạn chế dẫn người lạ về</span>
+                    </div>
+                </div>
+
+                <div class="card p-4 shadow-sm border-0">
+                    <h5 class="fw-bold text-dark mb-3">Thông tin liên hệ & Giới thiệu</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-secondary">Số điện thoại / Zalo</label>
+                        <input id="input-phone" type="text" class="form-control" value="0912 345 678" disabled>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-secondary">Giới thiệu bản thân ngắn</label>
+                        <textarea id="input-bio" class="form-control" rows="3"
+                            disabled>Mình là sinh viên năm 3 khoa Công nghệ thông tin, đang tìm một bạn ở chung phòng tính tình hiền lành, gọn gàng, tôn trọng không gian riêng để cùng chia sẻ tiền phòng quanh khu vực Quận 4.</textarea>
+                    </div>
+
+                    <div class="text-end">
+                        <button id="btn-edit" class="btn btn-outline-primary px-4 fw-bold" onclick="enableEditMode()">
+                            📝 Chỉnh sửa thông tin
+                        </button>
+                        <button id="btn-save" class="btn btn-success px-4 fw-bold d-none"
+                            onclick="saveProfileChanges()">
+                            💾 Lưu thay đổi
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="main.js"></script>
+    <script>
+        // 1. Hàm mở khóa các ô Input để người dùng nhập dữ liệu
+        function enableEditMode() {
+            // Mở khóa thuộc tính disabled bằng cách gán về false
+            document.getElementById('input-phone').disabled = false;
+            document.getElementById('input-bio').disabled = false;
+
+            // Ẩn nút "Chỉnh sửa", hiện nút "Lưu thay đổi" (Dùng class d-none của Bootstrap)
+            document.getElementById('btn-edit').classList.add('d-none');
+            document.getElementById('btn-save').classList.remove('d-none');
+
+            // Tự động focus con trỏ chuột vào ô nhập số điện thoại cho tiện
+            document.getElementById('input-phone').focus();
+        }
+
+        // 2. Hàm lưu lại dữ liệu và khóa form lại như cũ
+        function saveProfileChanges() {
+            // Khóa lại các ô nhập liệu
+            document.getElementById('input-phone').disabled = true;
+            document.getElementById('input-bio').disabled = true;
+
+            // Hiện lại nút "Chỉnh sửa", ẩn nút "Lưu"
+            document.getElementById('btn-edit').classList.remove('d-none');
+            document.getElementById('btn-save').classList.add('d-none');
+
+            // Bắn ra một thông báo lưu thành công sinh động
+            alert('Hệ thống đã cập nhật thông tin hồ sơ của bạn thành công!');
+        }
+    </script>
+    <!-- Đặt ngay trên thẻ đóng </body> -->
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+
+</html>

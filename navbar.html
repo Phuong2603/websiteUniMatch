@@ -1,0 +1,121 @@
+<!-- ================= NAVBAR CHUNG ================= -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container" style="max-width: 1100px;">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold text-primary fs-4" href="dashboard.html">UniMatch</a>
+
+            <!-- Nút Hamburger cho giao diện Mobile -->
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Các menu liên kết -->
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium ms-lg-4 gap-lg-3">
+                    <li class="nav-item">
+                        <!-- Thêm class 'active text-primary' vào trang hiện tại để làm nổi bật -->
+                        <a class="nav-link active text-primary" href="dashboard.html">🔍 Khám phá</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="saved_list.html">❤️ Đã lưu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_posts.html">📋 Quản lý tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="chat.html">💬 Tin nhắn</a>
+                    </li>
+                </ul>
+
+                <!-- Khu vực bên phải: Thông báo, Đăng tin, Avatar -->
+                <div class="d-flex align-items-center gap-4 mt-3 mt-lg-0">
+
+                   <!-- Quả chuông thông báo (Đã nâng cấp Dropdown UI) -->
+                    <div class="dropdown">
+                        <!-- Nút bấm (Icon chuông) -->
+                        <div class="position-relative" style="cursor: pointer;" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fs-5">🔔</span>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                                2
+                            </span>
+                        </div>
+                        
+                        <!-- Bảng menu thông báo thả xuống -->
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-0 overflow-hidden" aria-labelledby="notificationDropdown" style="width: 340px;">
+                            <!-- Tiêu đề -->
+                            <li class="px-3 py-2 border-bottom bg-light d-flex justify-content-between align-items-center">
+                                <span class="fw-bold text-dark">Thông báo</span>
+                                <a href="#" class="text-primary small text-decoration-none" onclick="event.stopPropagation();">Đánh dấu đã đọc</a>
+                            </li>
+                            
+                            <!-- Danh sách thông báo -->
+                            <div style="max-height: 350px; overflow-y: auto;">
+                                <!-- Thông báo 1: Chưa đọc (Nền xanh nhạt) -->
+                                <li>
+                                    <a class="dropdown-item py-3 border-bottom text-wrap bg-primary-subtle" href="#">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="fs-4">🛡️</div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-dark small">E-KYC Thành công</h6>
+                                                <p class="mb-1 text-secondary small" style="line-height: 1.4;">Tài khoản của bạn đã được hệ thống xác thực danh tính an toàn.</p>
+                                                <small class="text-primary fw-bold" style="font-size: 0.75rem;">Vừa xong</small>
+                                            </div>
+                                            <div class="bg-primary rounded-circle mt-2" style="width: 8px; height: 8px;"></div>
+                                        </div>
+                                    </a>
+                                </li>
+
+                                <!-- Thông báo 2: Đã đọc (Nền trắng) -->
+                                <li>
+                                    <a class="dropdown-item py-3 border-bottom text-wrap" href="chat.html">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="fs-4">✨</div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-dark small">Có người ghép phù hợp!</h6>
+                                                <p class="mb-1 text-secondary small" style="line-height: 1.4;">Thuật toán AI vừa tìm thấy Nguyễn Thành Huy (Độ tương thích 95%).</p>
+                                                <small class="text-muted fw-medium" style="font-size: 0.75rem;">2 giờ trước</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                
+                                <!-- Thông báo 3: Khuyến mãi/Hệ thống -->
+                                <li>
+                                    <a class="dropdown-item py-3 text-wrap" href="post_room.html">
+                                        <div class="d-flex align-items-start gap-3">
+                                            <div class="fs-4">🎉</div>
+                                            <div>
+                                                <h6 class="mb-1 fw-bold text-dark small">Đăng tin miễn phí</h6>
+                                                <p class="mb-1 text-secondary small" style="line-height: 1.4;">Tặng bạn 3 lượt đăng tin tìm trọ nổi bật trong tuần này.</p>
+                                                <small class="text-muted fw-medium" style="font-size: 0.75rem;">1 ngày trước</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </div>
+                            
+                            <!-- Nút Xem tất cả -->
+                            <li class="border-top text-center">
+                                <a href="#" class="dropdown-item text-primary small fw-bold py-2">Xem tất cả thông báo</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Nút đăng tin nhanh (Chỉ hiện trên màn hình lớn) -->
+                    <button class="btn btn-primary btn-sm px-3 py-2 fw-bold rounded-pill shadow-sm d-none d-lg-block"
+                        onclick="window.location.href='post_room.html'">
+                        + Đăng tin mới
+                    </button>
+
+                    <!-- Avatar người dùng -->
+                    <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                        style="width: 40px; height: 40px; cursor: pointer;"
+                        onclick="window.location.href='profile.html'" title="Hồ sơ cá nhân">
+                        VA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- ================= HẾT NAVBAR ================= -->

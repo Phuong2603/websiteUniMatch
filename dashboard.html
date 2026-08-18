@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khám phá - UniMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+    <div id="navbar-placeholder"></div>
+
+    <div class="container py-4" style="max-width: 1100px; min-height: 100vh;">
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8">
+                <div class="search-bar-container d-flex align-items-center">
+                    <span class="ps-3 text-muted">🔍</span>
+                    <input type="text" class="form-control search-input" placeholder="Nhập khu vực, tên đường...">
+                    <!-- NÚT LỌC (Gọi menu trượt) -->
+                    <button
+                        class="btn btn-primary rounded-pill px-4 ms-2 fw-bold shadow-sm d-flex align-items-center gap-1"
+                        type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
+                        ⚙️ Lọc
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-6">
+                <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill shadow-sm">
+                    <li class="nav-item">
+                        <button class="nav-link active w-100 fw-bold" id="btn-rooms" onclick="switchTab('rooms')">Phòng
+                            Cho Thuê</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link w-100 fw-bold" id="btn-mates" onclick="switchTab('mates')">Tìm Người
+                            Ghép</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="tab-rooms" class="content-tab" style="display: block; animation: fadeIn 0.4s;">
+            <div class="row g-4">
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 border-0">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800"
+                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
+                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5"
+                                onclick="toggleHeart(this)">🤍</button>
+                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 4</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">Phòng ban công thoáng mát Quận 4</h6>
+                            </div>
+                            <h5 class="fw-bold text-primary mb-2">3.500.000đ</h5>
+                            <p class="text-muted small mb-3">📍 123 Tôn Thất Thuyết, Phường 1</p>
+
+                            <div class="d-flex gap-2 mb-4 flex-wrap">
+                                <span class="badge bg-light text-dark border">❄️ Điều hòa</span>
+                                <span class="badge bg-light text-dark border">🛵 Để xe</span>
+                                <span class="badge bg-light text-dark border">🔑 Tự do</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
+                                    onclick="window.location.href='room_detail.html'">
+                                    Xem chi tiết
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 border-0">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
+                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
+                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5"
+                                onclick="toggleHeart(this)">🤍</button>
+                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 7</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">Ký túc xá cao cấp Sleepbox Q7</h6>
+                            </div>
+                            <h5 class="fw-bold text-primary mb-2">1.800.000đ</h5>
+                            <p class="text-muted small mb-3">📍 Nguyễn Hữu Thọ, Tân Hưng</p>
+
+                            <div class="d-flex gap-2 mb-4 flex-wrap">
+                                <span class="badge bg-light text-dark border">🧺 Máy giặt</span>
+                                <span class="badge bg-light text-dark border">🌐 Wifi Free</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
+                                    onclick="window.location.href='room_detail.html'">
+                                    Xem chi tiết
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 border-0">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800"
+                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
+                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5 active"
+                                onclick="toggleHeart(this)">❤️</button>
+                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 8</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h6 class="fw-bold text-dark mb-0">Phòng full nội thất xách vali vào ở</h6>
+                            </div>
+                            <h5 class="fw-bold text-primary mb-2">4.000.000đ</h5>
+                            <p class="text-muted small mb-3">📍 Tạ Quang Bửu, Phường 5</p>
+
+                            <div class="d-flex gap-2 mb-4 flex-wrap">
+                                <span class="badge bg-light text-dark border">🛏️ Nệm</span>
+                                <span class="badge bg-light text-dark border">❄️ Điều hòa</span>
+                                <span class="badge bg-light text-dark border"> tủ lạnh</span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
+                                    onclick="window.location.href='room_detail.html'">
+                                    Xem chi tiết
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB TÌM NGƯỜI GHÉP -->
+        <div id="tab-mates" class="content-tab" style="display: none; animation: fadeIn 0.4s;">
+            <div class="row g-4">
+
+                <!-- CARD 1: Hoàng Minh -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
+
+                        <!-- Header (Click để vào Profile) -->
+                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
+                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
+                            onmouseout="this.style.opacity='1'">
+                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
+                                style="width: 60px; height: 60px;">
+                                HM
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Hoàng Minh <span
+                                        class="badge badge-kyc ms-1">✔️</span></h6>
+                                <p class="text-muted small mb-0">Kỹ thuật Phần mềm</p>
+                            </div>
+                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
+                                <div class="fs-5">🔥</div>
+                                <div class="fw-bold text-danger small">95%</div>
+                            </div>
+                        </div>
+
+                        <!-- Nội dung Bio -->
+                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
+                            <span class="fw-bold text-dark">Tìm phòng:</span> Quanh khu vực Quận 4, Quận 7. Ngân sách
+                            ~2tr/người.
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Ngủ muộn</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Gọn gàng</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Không pet</span>
+                        </div>
+
+                        <!-- 2 Nút CTA mới -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
+                                onclick="window.location.href='cus_profile.html'">
+                                👤 Hồ sơ
+                            </button>
+                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
+                                onclick="window.location.href='chat.html'">
+                                💬 Nhắn tin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: Lan Anh -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
+
+                        <!-- Header (Click để vào Profile) -->
+                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
+                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
+                            onmouseout="this.style.opacity='1'">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
+                                style="width: 60px; height: 60px;">
+                                LA
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Lan Anh <span class="badge badge-kyc ms-1">✔️</span>
+                                </h6>
+                                <p class="text-muted small mb-0">Truyền thông Đa phương tiện</p>
+                            </div>
+                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
+                                <div class="fs-5">✨</div>
+                                <div class="fw-bold text-danger small">88%</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
+                            <span class="fw-bold text-dark">Tìm bạn:</span> Đã có sẵn phòng bên Quận 7, cần tìm 1 nữ ở
+                            ghép share tiền.
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Dậy sớm</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Nấu ăn</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Yên tĩnh</span>
+                        </div>
+
+                        <!-- 2 Nút CTA mới -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
+                                onclick="window.location.href='cus_profile.html'">
+                                👤 Hồ sơ
+                            </button>
+                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
+                                onclick="window.location.href='chat.html'">
+                                💬 Nhắn tin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: Trần Phát -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
+
+                        <!-- Header (Click để vào Profile) -->
+                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
+                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
+                            onmouseout="this.style.opacity='1'">
+                            <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
+                                style="width: 60px; height: 60px;">
+                                TP
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-1 text-dark">Trần Phát <span
+                                        class="badge badge-kyc ms-1">✔️</span></h6>
+                                <p class="text-muted small mb-0">Quản trị Kinh doanh</p>
+                            </div>
+                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
+                                <div class="fs-5">👍</div>
+                                <div class="fw-bold text-danger small">75%</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
+                            <span class="fw-bold text-dark">Tìm phòng:</span> Tài chính thả ga, cần tìm bạn thoải mái,
+                            có thể nuôi mèo.
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mb-4">
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Thức khuya</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Yêu mèo</span>
+                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Dẫn bạn về</span>
+                        </div>
+
+                        <!-- 2 Nút CTA mới -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
+                                onclick="window.location.href='cus_profile.html'">
+                                👤 Hồ sơ
+                            </button>
+                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
+                                onclick="window.location.href='chat.html'">
+                                💬 Nhắn tin
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- =================== GIAO DIỆN BỘ LỌC (OFFCANVAS) =================== -->
+    <div class="offcanvas offcanvas-end rounded-start-4 border-0 shadow" tabindex="-1" id="filterOffcanvas"
+        style="width: 380px;">
+
+        <!-- Phần Tiêu đề -->
+        <div class="offcanvas-header border-bottom bg-light">
+            <h5 class="offcanvas-title fw-bold text-primary d-flex align-items-center gap-2">
+                ⚙️ Bộ lọc nâng cao
+            </h5>
+            <!-- Nút dấu X để đóng -->
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <!-- Phần Nội dung (Các ô chọn bộ lọc) -->
+        <div class="offcanvas-body p-4">
+            <form>
+                <!-- 1. Lọc theo Khu vực -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark small">📍 KHU VỰC / QUẬN</label>
+                    <select class="form-select rounded-3 shadow-sm">
+                        <option value="">-- Tất cả khu vực --</option>
+                        <option value="Quận 4">Quận 4 (Gần cơ sở Tôn Thất Thuyết)</option>
+                        <option value="Quận 7">Quận 7 (Gần cơ sở Nguyễn Hữu Thọ)</option>
+                        <option value="Quận 8">Quận 8</option>
+                        <option value="Thủ Đức">TP. Thủ Đức (Làng Đại học)</option>
+                    </select>
+                </div>
+
+                <!-- 2. Lọc theo Khoảng giá -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark small">💰 KHOẢNG GIÁ (THÁNG)</label>
+                    <select class="form-select rounded-3 shadow-sm">
+                        <option value="">-- Tất cả mức giá --</option>
+                        <option value="under2">Dưới 2.000.000 đ</option>
+                        <option value="2to3">Từ 2.000.000 - 3.500.000 đ</option>
+                        <option value="3to5">Từ 3.500.000 - 5.000.000 đ</option>
+                        <option value="above5">Trên 5.000.000 đ</option>
+                    </select>
+                </div>
+
+                <!-- 3. Lọc theo Tiện ích (Nút gạt Switch) -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold text-dark small mb-3">✨ TIỆN ÍCH PHÒNG</label>
+
+                    <div class="d-flex flex-column gap-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="ui-aircon">
+                            <label class="form-check-label" for="ui-aircon">❄️ Có Máy lạnh</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="ui-parking">
+                            <label class="form-check-label" for="ui-parking">🛵 Chỗ để xe trong nhà</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="ui-freetime">
+                            <label class="form-check-label" for="ui-freetime">🔑 Giờ giấc tự do (Không chung
+                                chủ)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="ui-pet">
+                            <label class="form-check-label" for="ui-pet">🐱 Cho phép nuôi Thú cưng (Pet)</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Phần Đáy (Nút Đặt lại & Áp dụng) -->
+        <div class="offcanvas-footer border-top p-3 bg-light d-flex gap-2">
+            <button type="reset" class="btn btn-outline-secondary w-50 fw-bold rounded-pill">
+                🔄 Đặt lại
+            </button>
+            <!-- Thẻ data-bs-dismiss giúp bấm nút Áp dụng xong nó tự trượt đóng lại -->
+            <button id="btn-apply-filter" type="button" class="btn btn-primary w-50 fw-bold rounded-pill shadow-sm"
+                onclick="applyFilter()">
+                🔍 Áp dụng
+            </button>
+        </div>
+    </div>
+    <!-- =================== HẾT MENU TRƯỢT =================== -->
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function switchTab(tabName) {
+            const roomTab = document.getElementById('tab-rooms');
+            const mateTab = document.getElementById('tab-mates');
+            const btnRooms = document.getElementById('btn-rooms');
+            const btnMates = document.getElementById('btn-mates');
+
+            if (tabName === 'rooms') {
+                roomTab.style.display = 'block';
+                mateTab.style.display = 'none';
+                btnRooms.classList.add('active');
+                btnRooms.classList.remove('btn-light', 'text-dark');
+                btnMates.classList.remove('active');
+                btnMates.classList.add('btn-light', 'text-dark');
+            } else if (tabName === 'mates') {
+                mateTab.style.display = 'block';
+                roomTab.style.display = 'none';
+                btnMates.classList.add('active');
+                btnMates.classList.remove('btn-light', 'text-dark');
+                btnRooms.classList.remove('active');
+                btnRooms.classList.add('btn-light', 'text-dark');
+            }
+        }
+
+        function toggleHeart(buttonElement) {
+            const isLiked = buttonElement.classList.contains('active');
+            if (isLiked) {
+                buttonElement.classList.remove('active');
+                buttonElement.innerHTML = '🤍';
+            } else {
+                buttonElement.classList.add('active');
+                buttonElement.innerHTML = '❤️';
+            }
+        }
+        function applyFilter() {
+            const btn = document.getElementById('btn-apply-filter');
+
+            // Chuyển sang trạng thái Loading
+            btn.innerHTML = '⏳ Đang lọc...';
+            btn.disabled = true;
+
+            // Giả lập thời gian server phản hồi (0.8 giây)
+            setTimeout(() => {
+                // Khôi phục nút
+                btn.innerHTML = '🔍 Áp dụng';
+                btn.disabled = false;
+
+                // Đóng Offcanvas bằng API của Bootstrap 5
+                const offcanvasElement = document.getElementById('filterOffcanvas');
+                const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
+                offcanvas.hide();
+
+                // (Thực tế ở đây bạn sẽ render lại danh sách phòng trọ)
+            }, 800);
+        }
+    </script>
+    <!-- Bãi đáp cho Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Script gọi file Footer -->
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+
+</html>

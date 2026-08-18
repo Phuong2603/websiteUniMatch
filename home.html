@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - UniMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container bg-white shadow-sm rounded-4 p-4 p-md-5 my-4" style="max-width: 1100px;">
+
+        <nav class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom">
+            <h3 class="text-primary fw-bold mb-0">UniMatch</h3>
+            <button class="btn btn-outline-primary px-4 fw-bold rounded-pill"
+                onclick="window.location.href='login.html'">Đăng nhập</button>
+        </nav>
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0 pe-lg-5">
+                <span class="hero-badge fw-bold mb-3 d-inline-block">🚀 Dành riêng cho sinh viên</span>
+
+                <h1 class="fw-bold text-dark mb-4 display-5">
+                    Tìm Trọ An Toàn<br>
+                    <span class="text-primary">Chọn Bạn Như Ý</span>
+                </h1>
+
+                <p class="text-muted mb-5 fs-5">
+                    Nền tảng ứng dụng công nghệ E-KYC và AI Matching giúp bạn loại bỏ rủi ro lừa đảo và tìm kiếm người ở
+                    ghép phù hợp nhất.
+                </p>
+
+                <div class="d-grid d-lg-block">
+                    <button class="btn btn-primary btn-lg px-5 py-3 fw-bold shadow-sm rounded-pill"
+                        onclick="window.location.href='multiple_choice.html'">
+                        Bắt đầu tìm kiếm ngay
+                    </button>
+                </div>
+            </div>
+
+           <div class="col-lg-6">
+                <div class="row g-4 mb-4">
+                    <!-- Nút Phòng Trọ -->
+                    <div class="col-sm-6">
+                        <!-- Sửa link từ login.html thành dashboard.html -->
+                        <div class="feature-box bg-white shadow-sm rounded-4 h-100 p-4" onclick="window.location.href='dashboard.html'">
+                            <div class="feature-icon icon-primary mb-3"
+                                style="width: 70px; height: 70px; font-size: 2rem;">🏠</div>
+                            <h5 class="fw-bold mb-2">Phòng Trọ</h5>
+                            <p class="text-muted mb-0 small">Chính chủ 100%, thông tin được kiểm duyệt an toàn.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Nút Ở Ghép -->
+                    <div class="col-sm-6">
+                        <!-- Sửa link về dashboard.html -->
+                        <div class="feature-box bg-white shadow-sm rounded-4 h-100 p-4" onclick="window.location.href='dashboard.html'">
+                            <div class="feature-icon icon-success mb-3"
+                                style="width: 70px; height: 70px; font-size: 2rem;">🤝</div>
+                            <h5 class="fw-bold mb-2">Ở Ghép</h5>
+                            <p class="text-muted mb-0 small">Thuật toán Matching tìm người hợp lối sống đến 95%.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-box mt-3 p-4">
+                    <p class="text-muted fst-italic mb-3">"Nhờ UniMatch, mình không còn sợ bị lừa cọc phòng trên
+                        Facebook nữa! Tìm được người ở ghép siêu hợp rơ luôn."</p>
+                    <div class="d-flex align-items-center gap-3">
+    
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Bãi đáp cho Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Script gọi file Footer -->
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý tin đăng - UniMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .post-card {
+            transition: all 0.3s ease;
+        }
+
+        /* Hiệu ứng mờ đi khi tin bị ẩn hoặc đã cho thuê */
+        .post-inactive {
+            opacity: 0.6;
+            filter: grayscale(40%);
+        }
+
+        .action-btn {
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div id="navbar-placeholder"></div>
+
+    <div class="container py-4" style="max-width: 1000px; min-height: 100vh;">
+
+        <!-- Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+            <div>
+                <h3 class="fw-bold text-dark mb-0">📋 Quản lý tin đăng</h3>
+                <p class="text-muted small mt-1 mb-0">Theo dõi và cập nhật trạng thái các bài đăng của bạn.</p>
+            </div>
+        </div>
+
+        <!-- DANH SÁCH TIN ĐĂNG CỦA TÔI -->
+        <div class="row g-4" id="my-posts-container">
+
+            <!-- Tin đăng 1: Đang hiển thị -->
+            <div class="col-12" id="post-1">
+                <div class="card post-card shadow-sm border-0 overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800"
+                                class="w-100 h-100" style="object-fit: cover; min-height: 180px;" alt="Phòng trọ">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body d-flex flex-column h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                                    <h5 class="fw-bold text-dark mb-0">Phòng ban công thoáng mát gần ĐH Nguyễn Tất Thành
+                                    </h5>
+                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-medium"
+                                        id="status-badge-1">
+                                        🟢 Đang hiển thị
+                                    </span>
+                                </div>
+                                <p class="text-muted small mb-2">📍 123 Tôn Thất Thuyết, Phường 1, Quận 4</p>
+                                <h5 class="fw-bold text-primary mb-3">3.500.000đ/tháng</h5>
+
+                                <!-- Thống kê -->
+                                <div class="d-flex gap-4 mb-3 small text-secondary fw-medium">
+                                    <span>👀 124 lượt xem</span>
+                                    <span>❤️ 15 người lưu</span>
+                                    <span>📅 Đăng ngày: 15/08/2026</span>
+                                </div>
+
+                                <!-- Các nút hành động -->
+                                <div class="mt-auto d-flex gap-2 flex-wrap pt-3 border-top">
+                                    <button class="btn btn-outline-primary action-btn fw-bold rounded-pill px-3"
+                                        onclick="alert('Chuyển đến trang Chỉnh sửa thông tin!')">
+                                        ✏️ Sửa tin
+                                    </button>
+                                    <button class="btn btn-outline-warning action-btn fw-bold rounded-pill px-3"
+                                        id="toggle-btn-1" onclick="togglePostVisibility('post-1', 1)">
+                                        👁️‍🗨️ Ẩn tin
+                                    </button>
+                                    <button class="btn btn-outline-success action-btn fw-bold rounded-pill px-3"
+                                        id="rented-btn-1" onclick="markAsRented('post-1', 1)">
+                                        🤝 Đã tìm được người
+                                    </button>
+                                    <button class="btn btn-outline-danger action-btn fw-bold rounded-pill px-3 ms-auto"
+                                        onclick="deletePost('post-1')">
+                                        🗑️ Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tin đăng 2: Đã ẩn -->
+            <div class="col-12" id="post-2">
+                <div class="card post-card post-inactive shadow-sm border-0 overflow-hidden">
+                    <div class="row g-0">
+                        <div class="col-md-3">
+                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800"
+                                class="w-100 h-100" style="object-fit: cover; min-height: 180px;" alt="Phòng trọ">
+                        </div>
+                        <div class="col-md-9">
+                            <div class="card-body d-flex flex-column h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                                    <h5 class="fw-bold text-dark mb-0">Phòng full nội thất xách vali vào ở (Quận 8)</h5>
+                                    <span class="badge bg-secondary text-white px-3 py-2 rounded-pill fw-medium"
+                                        id="status-badge-2">
+                                        ⚪ Đã ẩn
+                                    </span>
+                                </div>
+                                <p class="text-muted small mb-2">📍 Tạ Quang Bửu, Phường 5, Quận 8</p>
+                                <h5 class="fw-bold text-primary mb-3">4.000.000đ/tháng</h5>
+
+                                <!-- Thống kê -->
+                                <div class="d-flex gap-4 mb-3 small text-secondary fw-medium">
+                                    <span>👀 45 lượt xem</span>
+                                    <span>❤️ 2 người lưu</span>
+                                    <span>📅 Đăng ngày: 10/08/2026</span>
+                                </div>
+
+                                <!-- Các nút hành động -->
+                                <div class="mt-auto d-flex gap-2 flex-wrap pt-3 border-top">
+                                    <button class="btn btn-outline-primary action-btn fw-bold rounded-pill px-3"
+                                        onclick="alert('Chuyển đến trang Chỉnh sửa thông tin!')">
+                                        ✏️ Sửa tin
+                                    </button>
+                                    <button class="btn btn-warning action-btn text-dark fw-bold rounded-pill px-3"
+                                        id="toggle-btn-2" onclick="togglePostVisibility('post-2', 2)">
+                                        👁️ Hiện tin lại
+                                    </button>
+                                    <button class="btn btn-outline-success action-btn fw-bold rounded-pill px-3"
+                                        id="rented-btn-2" onclick="markAsRented('post-2', 2)">
+                                        🤝 Đã tìm được người
+                                    </button>
+                                    <button class="btn btn-outline-danger action-btn fw-bold rounded-pill px-3 ms-auto"
+                                        onclick="deletePost('post-2')">
+                                        🗑️ Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Trạng thái trống (sẽ hiển thị khi xóa hết tin) -->
+        <div id="empty-posts-state" class="text-center py-5 d-none">
+            <div class="fs-1 mb-3">📝</div>
+            <h5 class="fw-bold text-dark">Bạn chưa đăng tin nào</h5>
+            <p class="text-muted small">Hãy đăng tin cho thuê phòng hoặc tìm người ở ghép để kết nối với mọi người.</p>
+            <button class="btn btn-primary rounded-pill px-4 fw-bold mt-2"
+                onclick="window.location.href='post_room.html'">Đăng tin đầu tiên</button>
+        </div>
+
+    </div>
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   <script>
+        // 1. Hàm Ẩn / Hiện tin
+        function togglePostVisibility(postId, index) {
+            const container = document.getElementById(postId); // Lấy thẻ bọc ngoài (col-12)
+            const card = container.querySelector('.card');     // VÀO TẬN BÊN TRONG LẤY THẺ CARD
+            const badge = document.getElementById(`status-badge-${index}`);
+            const toggleBtn = document.getElementById(`toggle-btn-${index}`);
+            
+            const isHidden = card.classList.contains('post-inactive');
+
+            if (isHidden) {
+                // Đang ẩn -> Chuyển thành Hiện
+                card.classList.remove('post-inactive');
+                badge.className = 'badge bg-success text-white px-3 py-2 rounded-pill fw-medium';
+                badge.innerHTML = '🟢 Đang hiển thị';
+                
+                toggleBtn.className = 'btn btn-outline-warning action-btn fw-bold rounded-pill px-3';
+                toggleBtn.innerHTML = '👁️‍🗨️ Ẩn tin';
+            } else {
+                // Đang hiện -> Chuyển thành Ẩn
+                card.classList.add('post-inactive');
+                badge.className = 'badge bg-secondary text-white px-3 py-2 rounded-pill fw-medium';
+                badge.innerHTML = '⚪ Đã ẩn';
+                
+                toggleBtn.className = 'btn btn-warning action-btn text-dark fw-bold rounded-pill px-3';
+                toggleBtn.innerHTML = '👁️ Hiện tin lại';
+            }
+        }
+
+        // 2. Hàm Đánh dấu đã cho thuê/tìm được người
+        function markAsRented(postId, index) {
+            const confirmAction = confirm("Bạn có chắc chắn đánh dấu tin này là ĐÃ CHO THUÊ/TÌM ĐƯỢC NGƯỜI? Tin sẽ bị ẩn khỏi bảng tin chung.");
+            if (!confirmAction) return;
+
+            const container = document.getElementById(postId);
+            const card = container.querySelector('.card'); // Fix lỗi lấy đúng thẻ card
+            const badge = document.getElementById(`status-badge-${index}`);
+            const rentedBtn = document.getElementById(`rented-btn-${index}`);
+            const toggleBtn = document.getElementById(`toggle-btn-${index}`);
+
+            // Thêm class làm mờ
+            card.classList.add('post-inactive');
+            
+            // Cập nhật Badge
+            badge.className = 'badge bg-primary text-white px-3 py-2 rounded-pill fw-medium';
+            badge.innerHTML = '🤝 Đã giao dịch xong';
+            
+            // Vô hiệu hóa nút
+            rentedBtn.disabled = true;
+            rentedBtn.innerHTML = '✅ Đã hoàn tất';
+            toggleBtn.disabled = true; // Không cho phép ẩn/hiện nữa
+        }
+
+        // 3. Hàm Xóa tin đăng
+        function deletePost(postId) {
+            const confirmDelete = confirm("⚠️ CẢNH BÁO: Bạn có chắc chắn muốn XÓA VĨNH VIỄN tin đăng này không? Dữ liệu không thể khôi phục.");
+            if (!confirmDelete) return;
+
+            const container = document.getElementById(postId); // Fix lỗi xóa nhầm cả bảng
+            
+            // Hiệu ứng thu nhỏ trước khi xóa
+            container.style.transition = 'all 0.3s ease';
+            container.style.opacity = '0';
+            container.style.transform = 'scale(0.9)';
+            
+            setTimeout(() => {
+                container.remove(); // Chỉ xóa đúng cái col-12 chứa tin này
+                checkEmptyPosts();
+            }, 300);
+        }
+
+        // 4. Hàm kiểm tra danh sách trống
+        function checkEmptyPosts() {
+            const container = document.getElementById('my-posts-container');
+            const emptyState = document.getElementById('empty-posts-state');
+            
+            // Nếu không còn phần tử con nào trong container
+            if (container.children.length === 0) {
+                emptyState.classList.remove('d-none');
+            }
+        }
+    </script>
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+
+</html>

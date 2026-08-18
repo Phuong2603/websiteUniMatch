@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tin nhắn - UniMatch</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+    <div id="navbar-placeholder"></div>
+
+    <div class="container py-4" style="max-width: 1100px;">
+
+        <div class="row g-0 chat-box-wrapper shadow-sm rounded-4 overflow-hidden border">
+
+            <!-- ================= CỘT TRÁI (SIDEBAR) ================= -->
+            <div class="col-md-4 col-lg-3 chat-sidebar d-none d-md-block p-0 bg-white border-end">
+                <div class="p-3 border-bottom bg-light">
+                    <h5 class="fw-bold text-dark mb-0">Đoạn trò chuyện</h5>
+                </div>
+
+                <!-- Người 1: Nguyễn Thành Huy -->
+                <!-- Thêm sự kiện onclick chuyển chat -->
+                <div class="chat-item-link active d-flex align-items-center gap-3 p-3 border-bottom"
+                    style="cursor: pointer;" onclick="switchChat(this, 'Nguyễn Thành Huy', 'TH', 'bg-primary')">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                        style="width: 45px; height: 45px;">
+                        TH
+                    </div>
+                    <div class="overflow-hidden">
+                        <h6 class="fw-bold mb-0 text-dark small">Nguyễn Thành Huy</h6>
+                        <p class="text-primary fw-medium small text-truncate mb-0">Hợp lối sống: 95%</p>
+                    </div>
+                </div>
+
+                <!-- Người 2: Trần Thu Lan -->
+                <!-- Thêm class opacity-50 và sự kiện onclick chuyển chat -->
+                <div class="chat-item-link opacity-50 d-flex align-items-center gap-3 p-3 border-bottom"
+                    style="cursor: pointer;" onclick="switchChat(this, 'Trần Thu Lan (Chủ trọ)', 'TL', 'bg-success')">
+                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                        style="width: 45px; height: 45px;">
+                        TL
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0 text-dark small">Trần Thu Lan (Chủ trọ)</h6>
+                        <p class="text-muted small mb-0">Vừa mới hoạt động</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= CỘT PHẢI (MAIN CHAT) ================= -->
+            <div class="col-12 col-md-8 col-lg-9 chat-main-area bg-light d-flex flex-column" style="height: 75vh;">
+
+                <!-- HEADER KHUNG CHAT BÊN PHẢI -->
+                <!-- Thêm onclick để trỏ về trang Profile -->
+                <div class="p-3 bg-white border-bottom d-flex align-items-center gap-3 shadow-sm"
+                    style="cursor: pointer;" onclick="window.location.href='cus_profile.html'"
+                    title="Xem chi tiết hồ sơ">
+                    <!-- GẮN ID CHO AVATAR -->
+                    <div id="chat-header-avatar"
+                        class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
+                        style="width: 45px; height: 45px;">
+                        TH
+                    </div>
+                    <div>
+                        <!-- GẮN ID CHO TÊN -->
+                        <h6 id="chat-header-name" class="fw-bold mb-1 text-dark hover-text-primary">Nguyễn Thành Huy
+                        </h6>
+                        <span class="text-success small fw-medium">● Đang trực tuyến</span>
+                    </div>
+                </div>
+
+                <!-- NỘI DUNG CHAT -->
+                <div id="chat-messages-box" class="chat-messages-body p-4 flex-grow-1 overflow-auto">
+                    <div class="msg-bubble msg-received bg-white shadow-sm border p-3 rounded-4 mb-3 d-inline-block"
+                        style="max-width: 75%;">
+                        Chào bạn! Hệ thống UniMatch báo tụi mình tương thích lối sống tới 95% lận nè. Bạn cũng học cơ sở
+                        Quận 4 đúng không?
+                    </div>
+                </div>
+
+                <!-- KHUNG NHẬP TIN NHẮN -->
+                <div class="chat-footer-input p-3 bg-white border-top">
+                    <div class="input-group shadow-sm rounded-pill overflow-hidden">
+                        <input id="input-message-text" type="text" class="form-control border-0 ps-4 py-3"
+                            placeholder="Nhập tin nhắn..." onkeypress="handleKeyPress(event)">
+                        <button class="btn btn-primary px-4 fw-bold" type="button" onclick="sendMessage()">
+                            Gửi ➔
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <script src="main.js"></script>
+    <script>
+        // ================= HÀM MỚI: CHUYỂN ĐỔI NGƯỜI CHAT =================
+        function switchChat(element, name, avatarText, avatarColor) {
+            // 1. Gỡ trạng thái "Đang chọn" (xóa active, thêm opacity-50) cho tất cả danh bạ
+            document.querySelectorAll('.chat-item-link').forEach(contact => {
+                contact.classList.remove('active', 'bg-light');
+                contact.classList.add('opacity-50');
+            });
+
+            // 2. Thêm trạng thái "Đang chọn" cho người vừa click
+            element.classList.add('active', 'bg-light');
+            element.classList.remove('opacity-50');
+
+            // 3. Đổi thông tin ở Header Khung Chat bên phải
+            document.getElementById('chat-header-name').innerText = name;
+
+            const headerAvatar = document.getElementById('chat-header-avatar');
+            headerAvatar.innerText = avatarText;
+            headerAvatar.className = `rounded-circle text-white d-flex align-items-center justify-content-center fw-bold shadow-sm ${avatarColor}`;
+
+            // 4. Reset hộp thoại chat (Xóa tin nhắn cũ, hiển thị thông báo kết nối)
+            const chatBox = document.getElementById('chat-messages-box');
+            chatBox.innerHTML = `<div class="text-center text-muted small my-4 py-2 bg-white rounded-pill shadow-sm w-75 mx-auto">Bạn đã bắt đầu trò chuyện với ${name}.</div>`;
+        }
+
+        // ================= CÁC HÀM XỬ LÝ CHAT HIỆN TẠI CỦA BẠN =================
+        function sendMessage() {
+            const inputField = document.getElementById('input-message-text');
+            const messageText = inputField.value.trim();
+            if (messageText === "") return;
+
+            const chatBox = document.getElementById('chat-messages-box');
+
+            // Tạo bong bóng tin nhắn gửi (Canh lề phải)
+            const myMsgWrapper = document.createElement('div');
+            myMsgWrapper.className = 'text-end mb-3';
+            myMsgWrapper.innerHTML = `<div class="msg-bubble msg-sent bg-primary text-white shadow-sm p-3 rounded-4 d-inline-block text-start" style="max-width: 75%;">${messageText}</div>`;
+
+            chatBox.appendChild(myMsgWrapper);
+            inputField.value = "";
+            inputField.focus();
+            scrollToBottom();
+
+            setTimeout(simulateReply, 1500);
+        }
+
+        function simulateReply() {
+            const chatBox = document.getElementById('chat-messages-box');
+
+            // Tạo bong bóng tin nhắn nhận (Canh lề trái)
+            const replyMsgWrapper = document.createElement('div');
+            replyMsgWrapper.className = 'mb-3';
+            replyMsgWrapper.innerHTML = `<div class="msg-bubble msg-received bg-white border shadow-sm p-3 rounded-4 d-inline-block text-dark" style="max-width: 75%;">Dạ đúng rồi á bạn! Mình cũng thích phòng gọn gàng sạch sẽ với không nuôi thú cưng nè. Hay là cuối tuần này tụi mình hẹn gặp nhau đi xem phòng trực tiếp nha?</div>`;
+
+            chatBox.appendChild(replyMsgWrapper);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const chatBox = document.getElementById('chat-messages-box');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') sendMessage();
+        }
+    </script>
+</body>
+
+</html>

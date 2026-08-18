@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UniMatch</title>
+    <!-- Bạn có thể dùng Bootstrap CDN ở đây để giao diện đẹp nhanh mà không tốn công viết CSS nhiều -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Thêm dòng này vào ngay dưới link Bootstrap -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <div class="container py-5" style="max-width: 1000px;">
+
+        <!-- MÀN HÌNH 1: XÁC THỰC E-KYC -->
+       <div id="page-ekyc" class="page active card p-4 p-md-5 shadow-sm mx-auto w-100 border-0" style="max-width: 500px; border-radius: 16px;">
+            <h3 class="text-center mb-4 text-primary">Xác thực tài khoản</h3>
+
+            <!-- Nơi hiển thị lỗi đỏ -->
+            <div id="ekyc-error" class="alert alert-danger p-2 small d-none" role="alert"></div>
+
+            <div class="mb-3">
+                <label class="form-label">Email sinh viên (.edu.vn)</label>
+                <input id="ekyc-email" type="email" class="form-control" placeholder="nguyenvana@...edu.vn">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Số CCCD/CMND</label>
+                <input id="ekyc-cccd" type="text" class="form-control" placeholder="Nhập 12 số CCCD">
+            </div>
+            <button id="btn-ekyc" class="btn btn-primary w-100 fw-bold py-2" onclick="validateEkyc()">
+                Xác thực & Tiếp tục
+            </button>
+        </div>
+
+        <!-- MÀN HÌNH 2: TRẮC NGHIỆM LỐI SỐNG (SPLIT-SCREEN) -->
+        <div id="page-quiz" class="page card shadow-sm border-0 w-100 overflow-hidden" style="border-radius: 16px; height: 85vh;">
+            <div class="row g-0 h-100">
+                
+                <!-- BÊN TRÁI (1/3): Cố định, lấp đầy khoảng trống -->
+                <div class="col-md-4 col-lg-4 bg-primary-subtle p-4 p-md-5 d-flex flex-column border-end h-100">
+                    <h3 class="text-primary fw-bold mb-3">Trắc nghiệm lối sống</h3>
+                    <p class="text-secondary small mb-4">Hoàn thành 10 câu hỏi để thuật toán AI phân tích độ tương thích. Dữ liệu của bạn được bảo mật tuyệt đối.</p>
+                    
+                    <!-- Danh sách tiêu chí AI -->
+                    <div class="mt-2 mb-auto">
+                        <h6 class="fw-bold text-dark mb-3 small text-uppercase" style="letter-spacing: 0.5px;">Tiêu chí phân tích:</h6>
+                        <ul class="list-unstyled ai-criteria-list">
+                            <li>🕒 Giờ giấc & Sinh hoạt</li>
+                            <li>🧹 Tiêu chuẩn Vệ sinh</li>
+                            <li>💰 Thói quen Tài chính</li>
+                            <li>🐶 Quan điểm Thú cưng</li>
+                            <li>🧘 Mức độ Hướng nội/Ngoại</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Tiến độ -->
+                    <div class="mt-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small fw-bold text-primary">Tiến độ làm bài</span>
+                            <span class="small text-muted fw-bold">10 Câu</span>
+                        </div>
+                        <div class="progress shadow-sm" style="height: 8px;">
+                            <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BÊN PHẢI (2/3): Khu vực câu hỏi tự cuộn -->
+                <div class="col-md-8 col-lg-8 bg-white p-4 p-md-5 d-flex flex-column h-100">
+                    
+                    <div class="custom-scroll-area mb-3">
+                        
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">1. Thói quen giờ giấc sinh hoạt của bạn?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="time">
+                                        <span class="small choice-text text-secondary">Thức khuya, hay làm việc/học bài ban đêm</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="time">
+                                        <span class="small choice-text text-secondary">Dậy sớm, ngủ sớm giữ gìn sức khỏe</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">2. Mức độ ngăn nắp, vệ sinh không gian sống?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="clean">
+                                        <span class="small choice-text text-secondary">Cực kỳ kỹ tính, dọn dẹp sạch sẽ mỗi ngày</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="clean">
+                                        <span class="small choice-text text-secondary">Ở mức bình thường, dọn vào cuối tuần</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">3. Quan điểm của bạn về việc dẫn bạn bè về phòng?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="friends">
+                                        <span class="small choice-text text-secondary">Thoải mái, có thể tụ tập ăn uống vui vẻ</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="friends">
+                                        <span class="small choice-text text-secondary">Cần sự riêng tư, hạn chế hoặc báo trước</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">4. Quan điểm của bạn về việc nuôi thú cưng?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="pets">
+                                        <span class="small choice-text text-secondary">Thoải mái, tôi là người yêu động vật</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="pets">
+                                        <span class="small choice-text text-secondary">Không thích ngửi mùi/tiếng ồn của thú cưng</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">5. Cách sử dụng nhu yếu phẩm chung?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="shared">
+                                        <span class="small choice-text text-secondary">Gộp tiền mua chung, dùng thoải mái</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="shared">
+                                        <span class="small choice-text text-secondary">Tiền ai nấy mua, người đó tự quản lý</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">6. Đóng phí định kỳ (nhà, điện, nước)?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="money">
+                                        <span class="small choice-text text-secondary">Phải đóng đúng ngày hẹn, không trễ hẹn</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="money">
+                                        <span class="small choice-text text-secondary">Linh động chậm 1-2 ngày nếu báo trước</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">7. Thói quen ăn uống và nấu nướng?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="cook">
+                                        <span class="small choice-text text-secondary">Thích tự nấu ăn, có thể thổi cơm chung</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="cook">
+                                        <span class="small choice-text text-secondary">Thường ăn tiệm, không có nhu cầu nấu chung</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">8. Việc sử dụng máy lạnh và thiết bị điện?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="electric">
+                                        <span class="small choice-text text-secondary">Ưu tiên thoải mái, sẵn sàng chia tiền điện</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="electric">
+                                        <span class="small choice-text text-secondary">Ưu tiên tiết kiệm chi phí, chỉ bật khi cần</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4 pb-4 border-bottom">
+                            <h6 class="fw-bold text-dark mb-3">9. Mong muốn về không gian học tập?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="study">
+                                        <span class="small choice-text text-secondary">Yên tĩnh tuyệt đối để tập trung cao độ</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="study">
+                                        <span class="small choice-text text-secondary">Thoải mái, có thể vừa học vừa nghe nhạc</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
+                            <h6 class="fw-bold text-dark mb-3">10. Bạn đánh giá mức độ hướng nội / hướng ngoại?</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="personality">
+                                        <span class="small choice-text text-secondary">Hướng nội, không gian riêng tư, yên bình</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="w-100 h-100 p-3 rounded-3 quiz-choice d-flex align-items-start gap-2">
+                                        <input class="form-check-input mt-1 flex-shrink-0" type="radio" name="personality">
+                                        <span class="small choice-text text-secondary">Hướng ngoại, thích trò chuyện và kết nối</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Hết khung cuộn -->
+
+                    <!-- Nút Submit nằm ở cuối khu vực bên phải (Cố định ở dưới cùng) -->
+                    <div class="pt-3 border-top mt-auto text-end bg-white">
+                        <button id="btn-submit-quiz" class="btn btn-success btn-lg px-5 fw-bold shadow-sm rounded-pill w-100" onclick="simulateAIAnalysis()">
+                            Hoàn tất & Phân tích AI ➔
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH 3: KẾT QUẢ MATCHING NÂNG CẤP -->
+        <div id="page-result" class="page card p-4 p-md-5 shadow-sm text-center mx-auto w-100 border-0" style="max-width: 600px; border-radius: 16px;">
+            <h3 class="mb-2 text-success fw-bold">Kết quả phù hợp nhất</h3>
+            <p class="text-muted small mb-4">Thuật toán AI đã tìm thấy thành viên có phong cách sống tương đồng nhất với bạn tại Đại học Nguyễn Tất Thành</p>
+
+            <!-- ========================================== -->
+            <!-- BẮT ĐẦU SỬA Ở ĐÂY: Thêm onclick và hiệu ứng hover -->
+            <div class="border rounded-4 p-4 bg-white mb-4 shadow-sm position-relative overflow-hidden" 
+                 style="cursor: pointer; transition: all 0.2s ease;" 
+                 onclick="window.location.href='cus_profile.html'"
+                 onmouseover="this.classList.add('shadow-lg'); this.style.transform='translateY(-5px)';" 
+                 onmouseout="this.classList.remove('shadow-lg'); this.style.transform='translateY(0)';"
+                 title="Bấm vào đây để xem chi tiết hồ sơ!">
+                
+                <!-- Hiển thị % Matching nổi bật -->
+                <div class="position-absolute top-0 end-0 bg-danger text-white px-3 py-1 fw-bold small shadow-sm" style="border-bottom-left-radius: 12px; z-index: 2;">
+                    Tương thích 95%
+                </div>
+
+                <!-- Avatar giả lập bằng CSS -->
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center mx-auto mb-3 fw-bold fs-3 shadow-sm position-relative z-1" style="width: 80px; height: 80px;">
+                    TH
+                </div>
+
+                <h4 class="fw-bold text-dark mb-1 position-relative z-1">Nguyễn Thành Huy</h4>
+                <p class="text-primary fw-medium small mb-3 position-relative z-1">Khoa Truyền thông Sáng tạo - Trường ĐH Nguyễn Tất Thành</p>
+
+                <!-- Tóm tắt lý do tương thích hoàn chỉnh -->
+                <div class="text-start bg-light p-3 rounded-3 small text-secondary position-relative z-1 border">
+                    <div class="mb-2">✅ <strong>Giờ giấc & Thói quen:</strong> Cùng thuộc nhóm hoạt động ban đêm và tôn trọng không gian học tập yên tĩnh.</div>
+                    <div class="mb-2">✅ <strong>Vệ sinh & Ăn uống:</strong> Đều thích tự nấu ăn và ưu tiên giữ gìn không gian chung gọn gàng.</div>
+                    <div class="mb-2">✅ <strong>Thú cưng & Sinh hoạt:</strong> Cùng thống nhất không nuôi động vật và hạn chế dẫn người lạ về phòng.</div>
+                    <div>✅ <strong>Tài chính & Tiêu dùng:</strong> Có chung quan điểm tiết kiệm điện và cam kết đóng tiền phòng đúng hạn tuyệt đối.</div>
+                </div>
+                
+                <!-- Gợi ý bấm (Hiển thị mờ ở góc) -->
+                <div class="mt-3 text-primary small fw-bold text-decoration-underline position-relative z-1">
+                    Xem chi tiết hồ sơ 👉
+                </div>
+            </div>
+            <!-- KẾT THÚC SỬA Ở ĐÂY -->
+            <!-- ========================================== -->
+
+            <div class="d-flex flex-column flex-sm-row gap-2">
+                <button class="btn btn-outline-secondary w-100 py-2 fw-bold rounded-pill" onclick="nextPage('page-quiz')">
+                    Làm lại trắc nghiệm
+                </button>
+                <button class="btn btn-success w-100 py-2 fw-bold rounded-pill shadow-sm" onclick="window.location.href='chat.html'">
+                    💬 Trò chuyện ngay
+                </button>
+            </div>
+        </div>
+
+        <script>
+        // 1. Hàm chuyển qua lại giữa các màn hình
+        function nextPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // 2. Hàm kiểm tra dữ liệu Màn hình 1 (E-KYC)
+        function validateEkyc() {
+            const email = document.getElementById('ekyc-email').value.trim();
+            const cccd = document.getElementById('ekyc-cccd').value.trim();
+            const errorDiv = document.getElementById('ekyc-error');
+            const btn = document.getElementById('btn-ekyc');
+
+            errorDiv.classList.add('d-none');
+            errorDiv.innerText = '';
+
+            if (email === "" || cccd === "") {
+                errorDiv.innerText = "⚠️ Vui lòng nhập đầy đủ Email và Số CCCD.";
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            if (!email.endsWith(".edu.vn")) {
+                errorDiv.innerText = "⚠️ Vui lòng sử dụng email sinh viên hợp lệ (đuôi .edu.vn).";
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            if (cccd.length !== 12 || isNaN(cccd)) {
+                errorDiv.innerText = "⚠️ Số CCCD không hợp lệ (Phải bao gồm 12 chữ số).";
+                errorDiv.classList.remove('d-none');
+                return;
+            }
+
+            btn.innerHTML = '⏳ Đang kết nối CSDL Quốc gia...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = 'Xác thực & Tiếp tục ➔';
+                btn.disabled = false;
+                nextPage('page-quiz');
+            }, 1000);
+        }
+
+        // 3. Hàm phân tích AI (Màn hình 2) có bắt lỗi nếu người dùng bỏ sót câu hỏi
+        function simulateAIAnalysis() {
+            // Đếm số lượng câu hỏi đã được người dùng chọn (checked)
+            const answeredCount = document.querySelectorAll('.custom-scroll-area input[type="radio"]:checked').length;
+            
+            // Nếu chưa đủ 10 câu thì bật cảnh báo
+            if (answeredCount < 10) {
+                alert(`⚠️ Bạn mới trả lời ${answeredCount}/10 câu hỏi.\nVui lòng chọn đầy đủ các đáp án để thuật toán AI hoạt động chính xác nhất nhé!`);
+                return;
+            }
+
+            // Nếu đã đủ 10 câu thì chạy hiệu ứng Loading
+            const btn = document.getElementById('btn-submit-quiz');
+            btn.innerHTML = '⏳ Đang quét hồ sơ 10.000+ người dùng...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = 'Hoàn tất & Phân tích AI ➔';
+                btn.disabled = false;
+                nextPage('page-result');
+            }, 2000);
+        }
+    </script>
+</body>
+
+</html>
