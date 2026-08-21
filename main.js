@@ -35,3 +35,25 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Lỗi hệ thống:', error);
         });
 });
+// ==========================================
+// HÀM XÓA TIN ĐĂNG PHÒNG TRỌ
+// ==========================================
+function deleteRoom(roomId) {
+    // 1. Hiện bảng hỏi xác nhận cho chắc cú
+    if(confirm("⚠️ Bạn có chắc chắn muốn xóa tin đăng này không? Hành động này không thể hoàn tác!")) {
+        
+        // 2. Gọi API Xóa
+        fetch(`http://localhost:3000/api/rooms/${roomId}`, {
+            method: 'DELETE'
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.message); // Báo thành công
+            location.reload();   // Tự động tải lại trang để mất cái phòng bị xóa
+        })
+        .catch(error => {
+            console.error("Lỗi xóa phòng:", error);
+            alert("❌ Không thể xóa phòng lúc này!");
+        });
+    }
+}

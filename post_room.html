@@ -188,7 +188,7 @@
             }
         }
 
-        // 2. Hàm xử lý logic kiểm tra form và Đăng tin
+        // 2. Hàm xử lý logic kiểm tra form và Đăng tin LÊN MONGODB
         function handleSubmitPost() {
             const title = document.getElementById('post-title').value.trim();
             const price = document.getElementById('post-price').value.trim();
@@ -200,11 +200,37 @@
                 return;
             }
 
-            // Bắn thông báo chúc mừng thành công
-            alert('🎉 Chúc mừng! Tin đăng của bạn đã được gửi hệ thống kiểm duyệt E-KYC thành công. Đang chuyển về Bảng tin...');
+            // Gom các tiện ích từ Checkbox
+            let utilitiesList = [];
+            if (document.getElementById('aircon').checked) utilitiesList.push("❄️ Điều hòa");
+            if (document.getElementById('parking').checked) utilitiesList.push("🛵 Để xe");
+            if (document.getElementById('wifi').checked) utilitiesList.push("🌐 Wifi");
+            if (document.getElementById('washer').checked) utilitiesList.push("🧺 Máy giặt");
+            if (document.getElementById('time').checked) utilitiesList.push("🔑 Tự do");
 
-            // Chuyển hướng người dùng về lại trang Dashboard sau khi đăng xong
-            window.location.href = 'dashboard.html';
+            // Đóng gói dữ liệu chuẩn Form
+            const newRoomData = {
+                title: title,
+                price: price + "đ", // Thêm chữ đ vào đuôi cho đẹp
+                address: "📍 " + address,
+                image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800", // Tạm dùng ảnh mặc định
+                utilities: utilitiesList
+            };
+
+            // GỌI API ĐẨY DỮ LIỆU LÊN NODE.JS VÀ MONGODB
+            fetch('http://localhost:3000/api/rooms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newRoomData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('🎉 Chúc mừng! Tin đăng của bạn đã được lưu thẳng vào MongoDB. Đang chuyển về Bảng tin...');
+                window.location.href = 'dashboard.html';
+            })
+            .catch(error => {
+                alert('❌ Có lỗi xảy ra khi kết nối máy chủ: ' + error);
+            });
         }
     </script>
     <div id="footer-placeholder"></div>
