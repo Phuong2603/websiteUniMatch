@@ -23,7 +23,6 @@
                 </div>
 
                 <!-- Người 1: Nguyễn Thành Huy -->
-                <!-- Thêm sự kiện onclick chuyển chat -->
                 <div class="chat-item-link active d-flex align-items-center gap-3 p-3 border-bottom"
                     style="cursor: pointer;" onclick="switchChat(this, 'Nguyễn Thành Huy', 'TH', 'bg-primary')">
                     <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
@@ -37,7 +36,6 @@
                 </div>
 
                 <!-- Người 2: Trần Thu Lan -->
-                <!-- Thêm class opacity-50 và sự kiện onclick chuyển chat -->
                 <div class="chat-item-link opacity-50 d-flex align-items-center gap-3 p-3 border-bottom"
                     style="cursor: pointer;" onclick="switchChat(this, 'Trần Thu Lan (Chủ trọ)', 'TL', 'bg-success')">
                     <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
@@ -55,18 +53,15 @@
             <div class="col-12 col-md-8 col-lg-9 chat-main-area bg-light d-flex flex-column" style="height: 75vh;">
 
                 <!-- HEADER KHUNG CHAT BÊN PHẢI -->
-                <!-- Thêm onclick để trỏ về trang Profile -->
                 <div class="p-3 bg-white border-bottom d-flex align-items-center gap-3 shadow-sm"
                     style="cursor: pointer;" onclick="window.location.href='cus_profile.html'"
                     title="Xem chi tiết hồ sơ">
-                    <!-- GẮN ID CHO AVATAR -->
                     <div id="chat-header-avatar"
                         class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold shadow-sm"
                         style="width: 45px; height: 45px;">
                         TH
                     </div>
                     <div>
-                        <!-- GẮN ID CHO TÊN -->
                         <h6 id="chat-header-name" class="fw-bold mb-1 text-dark hover-text-primary">Nguyễn Thành Huy
                         </h6>
                         <span class="text-success small fw-medium">● Đang trực tuyến</span>
@@ -97,33 +92,77 @@
 
         </div>
     </div>
+    
     <script src="main.js"></script>
+
     <script>
-        // ================= HÀM MỚI: CHUYỂN ĐỔI NGƯỜI CHAT =================
+        // =========================================================
+        // HÀM MỚI: BẮT DỮ LIỆU TỪ TRANG CHI TIẾT CHUYỂN SANG
+        // =========================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const targetName = urlParams.get('name');
+            const roomTitle = urlParams.get('room');
+
+            if (targetName) {
+                // Đổi Tên Header
+                document.getElementById('chat-header-name').innerText = targetName;
+
+                // Tự động bốc 2 chữ cái đầu làm Avatar (VD: Trần Thu Lan -> TL)
+                const nameParts = targetName.split(' ');
+                let avatarText = "AD";
+                if(nameParts.length >= 2) {
+                    avatarText = nameParts[0][0] + nameParts[nameParts.length - 1][0];
+                } else if(targetName.length > 0) {
+                    avatarText = targetName.substring(0, 2);
+                }
+                
+                const headerAvatar = document.getElementById('chat-header-avatar');
+                headerAvatar.innerText = avatarText.toUpperCase();
+                headerAvatar.className = "rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold shadow-sm";
+
+                // Nếu có Tên phòng truyền sang, tự động gõ một câu hỏi thuê phòng!
+                if (roomTitle) {
+                    const chatBox = document.getElementById('chat-messages-box');
+                    chatBox.innerHTML = ''; // Dọn sạch đoạn chat mẫu cũ đi
+
+                    const autoGreeting = `Chào bạn, mình thấy tin đăng phòng "${roomTitle}" của bạn trên UniMatch. Phòng này hiện còn trống không ạ?`;
+                    
+                    const myMsgWrapper = document.createElement('div');
+                    myMsgWrapper.className = 'text-end mb-3';
+                    myMsgWrapper.innerHTML = `<div class="msg-bubble msg-sent bg-primary text-white shadow-sm p-3 rounded-4 d-inline-block text-start" style="max-width: 75%;">${autoGreeting}</div>`;
+                    chatBox.appendChild(myMsgWrapper);
+
+                    // Chủ trọ giả lập trả lời lại sau 1.5 giây
+                    setTimeout(() => {
+                        const replyMsgWrapper = document.createElement('div');
+                        replyMsgWrapper.className = 'mb-3';
+                        replyMsgWrapper.innerHTML = `<div class="msg-bubble msg-received bg-white border shadow-sm p-3 rounded-4 d-inline-block text-dark" style="max-width: 75%;">Chào bạn, phòng bên mình hiện vẫn còn trống nhé. Bạn định bao giờ dọn vào ở và ở mấy người ạ?</div>`;
+                        chatBox.appendChild(replyMsgWrapper);
+                        scrollToBottom();
+                    }, 1500);
+                }
+            }
+        });
+
+        // ================= CÁC HÀM CŨ CỦA BẠN (GIỮ NGUYÊN 100%) =================
         function switchChat(element, name, avatarText, avatarColor) {
-            // 1. Gỡ trạng thái "Đang chọn" (xóa active, thêm opacity-50) cho tất cả danh bạ
             document.querySelectorAll('.chat-item-link').forEach(contact => {
                 contact.classList.remove('active', 'bg-light');
                 contact.classList.add('opacity-50');
             });
-
-            // 2. Thêm trạng thái "Đang chọn" cho người vừa click
             element.classList.add('active', 'bg-light');
             element.classList.remove('opacity-50');
 
-            // 3. Đổi thông tin ở Header Khung Chat bên phải
             document.getElementById('chat-header-name').innerText = name;
-
             const headerAvatar = document.getElementById('chat-header-avatar');
             headerAvatar.innerText = avatarText;
             headerAvatar.className = `rounded-circle text-white d-flex align-items-center justify-content-center fw-bold shadow-sm ${avatarColor}`;
 
-            // 4. Reset hộp thoại chat (Xóa tin nhắn cũ, hiển thị thông báo kết nối)
             const chatBox = document.getElementById('chat-messages-box');
             chatBox.innerHTML = `<div class="text-center text-muted small my-4 py-2 bg-white rounded-pill shadow-sm w-75 mx-auto">Bạn đã bắt đầu trò chuyện với ${name}.</div>`;
         }
 
-        // ================= CÁC HÀM XỬ LÝ CHAT HIỆN TẠI CỦA BẠN =================
         function sendMessage() {
             const inputField = document.getElementById('input-message-text');
             const messageText = inputField.value.trim();
@@ -131,7 +170,6 @@
 
             const chatBox = document.getElementById('chat-messages-box');
 
-            // Tạo bong bóng tin nhắn gửi (Canh lề phải)
             const myMsgWrapper = document.createElement('div');
             myMsgWrapper.className = 'text-end mb-3';
             myMsgWrapper.innerHTML = `<div class="msg-bubble msg-sent bg-primary text-white shadow-sm p-3 rounded-4 d-inline-block text-start" style="max-width: 75%;">${messageText}</div>`;
@@ -146,8 +184,6 @@
 
         function simulateReply() {
             const chatBox = document.getElementById('chat-messages-box');
-
-            // Tạo bong bóng tin nhắn nhận (Canh lề trái)
             const replyMsgWrapper = document.createElement('div');
             replyMsgWrapper.className = 'mb-3';
             replyMsgWrapper.innerHTML = `<div class="msg-bubble msg-received bg-white border shadow-sm p-3 rounded-4 d-inline-block text-dark" style="max-width: 75%;">Dạ đúng rồi á bạn! Mình cũng thích phòng gọn gàng sạch sẽ với không nuôi thú cưng nè. Hay là cuối tuần này tụi mình hẹn gặp nhau đi xem phòng trực tiếp nha?</div>`;
@@ -164,6 +200,15 @@
         function handleKeyPress(event) {
             if (event.key === 'Enter') sendMessage();
         }
+    </script>
+
+    <div id="footer-placeholder"></div>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
     </script>
 </body>
 

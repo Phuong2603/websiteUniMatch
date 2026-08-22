@@ -14,12 +14,13 @@
 
     <div class="container py-4" style="max-width: 1100px; min-height: 100vh;">
 
+        <!-- THANH TÌM KIẾM & BỘ LỌC -->
         <div class="row justify-content-center mb-4">
             <div class="col-lg-8">
                 <div class="search-bar-container d-flex align-items-center">
                     <span class="ps-3 text-muted">🔍</span>
-                    <input type="text" class="form-control search-input" placeholder="Nhập khu vực, tên đường...">
-                    <!-- NÚT LỌC (Gọi menu trượt) -->
+                    <input type="text" id="searchInput" class="form-control search-input"
+                        placeholder="Nhập khu vực, tên đường...">
                     <button
                         class="btn btn-primary rounded-pill px-4 ms-2 fw-bold shadow-sm d-flex align-items-center gap-1"
                         type="button" data-bs-toggle="offcanvas" data-bs-target="#filterOffcanvas">
@@ -29,6 +30,7 @@
             </div>
         </div>
 
+        <!-- MENU CHUYỂN TAB -->
         <div class="row justify-content-center mb-4">
             <div class="col-lg-6">
                 <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill shadow-sm">
@@ -44,280 +46,31 @@
             </div>
         </div>
 
+        <!-- KHU VỰC CHỨA PHÒNG TRỌ -->
         <div id="tab-rooms" class="content-tab" style="display: block; animation: fadeIn 0.4s;">
-            <div class="row g-4">
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 border-0">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800"
-                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
-                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5"
-                                onclick="toggleHeart(this)">🤍</button>
-                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 4</span>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="fw-bold text-dark mb-0">Phòng ban công thoáng mát Quận 4</h6>
-                            </div>
-                            <h5 class="fw-bold text-primary mb-2">3.500.000đ</h5>
-                            <p class="text-muted small mb-3">📍 123 Tôn Thất Thuyết, Phường 1</p>
-
-                            <div class="d-flex gap-2 mb-4 flex-wrap">
-                                <span class="badge bg-light text-dark border">❄️ Điều hòa</span>
-                                <span class="badge bg-light text-dark border">🛵 Để xe</span>
-                                <span class="badge bg-light text-dark border">🔑 Tự do</span>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
-                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
-                                    onclick="window.location.href='room_detail.html'">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 border-0">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800"
-                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
-                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5"
-                                onclick="toggleHeart(this)">🤍</button>
-                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 7</span>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="fw-bold text-dark mb-0">Ký túc xá cao cấp Sleepbox Q7</h6>
-                            </div>
-                            <h5 class="fw-bold text-primary mb-2">1.800.000đ</h5>
-                            <p class="text-muted small mb-3">📍 Nguyễn Hữu Thọ, Tân Hưng</p>
-
-                            <div class="d-flex gap-2 mb-4 flex-wrap">
-                                <span class="badge bg-light text-dark border">🧺 Máy giặt</span>
-                                <span class="badge bg-light text-dark border">🌐 Wifi Free</span>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
-                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
-                                    onclick="window.location.href='room_detail.html'">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 border-0">
-                        <div class="position-relative">
-                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800"
-                                class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
-                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5 active"
-                                onclick="toggleHeart(this)">❤️</button>
-                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-dark opacity-75">Quận 8</span>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h6 class="fw-bold text-dark mb-0">Phòng full nội thất xách vali vào ở</h6>
-                            </div>
-                            <h5 class="fw-bold text-primary mb-2">4.000.000đ</h5>
-                            <p class="text-muted small mb-3">📍 Tạ Quang Bửu, Phường 5</p>
-
-                            <div class="d-flex gap-2 mb-4 flex-wrap">
-                                <span class="badge bg-light text-dark border">🛏️ Nệm</span>
-                                <span class="badge bg-light text-dark border">❄️ Điều hòa</span>
-                                <span class="badge bg-light text-dark border"> tủ lạnh</span>
-                            </div>
-
-                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
-                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold"
-                                    onclick="window.location.href='room_detail.html'">
-                                    Xem chi tiết
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <!-- Sân bãi trống chờ API bơm dữ liệu vào -->
+            <div class="row g-4" id="rooms-container"></div>
         </div>
 
-        <!-- TAB TÌM NGƯỜI GHÉP -->
+        <!-- KHU VỰC CHỨA TÌM NGƯỜI GHÉP -->
         <div id="tab-mates" class="content-tab" style="display: none; animation: fadeIn 0.4s;">
-            <div class="row g-4">
-
-                <!-- CARD 1: Hoàng Minh -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
-
-                        <!-- Header (Click để vào Profile) -->
-                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
-                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
-                            onmouseout="this.style.opacity='1'">
-                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
-                                style="width: 60px; height: 60px;">
-                                HM
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1 text-dark">Hoàng Minh <span
-                                        class="badge badge-kyc ms-1">✔️</span></h6>
-                                <p class="text-muted small mb-0">Kỹ thuật Phần mềm</p>
-                            </div>
-                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
-                                <div class="fs-5">🔥</div>
-                                <div class="fw-bold text-danger small">95%</div>
-                            </div>
-                        </div>
-
-                        <!-- Nội dung Bio -->
-                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
-                            <span class="fw-bold text-dark">Tìm phòng:</span> Quanh khu vực Quận 4, Quận 7. Ngân sách
-                            ~2tr/người.
-                        </div>
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Ngủ muộn</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Gọn gàng</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Không pet</span>
-                        </div>
-
-                        <!-- 2 Nút CTA mới -->
-                        <div class="d-flex gap-2 mt-auto">
-                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
-                                onclick="window.location.href='cus_profile.html'">
-                                👤 Hồ sơ
-                            </button>
-                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
-                                onclick="window.location.href='chat.html'">
-                                💬 Nhắn tin
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CARD 2: Lan Anh -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
-
-                        <!-- Header (Click để vào Profile) -->
-                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
-                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
-                            onmouseout="this.style.opacity='1'">
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
-                                style="width: 60px; height: 60px;">
-                                LA
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1 text-dark">Lan Anh <span class="badge badge-kyc ms-1">✔️</span>
-                                </h6>
-                                <p class="text-muted small mb-0">Truyền thông Đa phương tiện</p>
-                            </div>
-                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
-                                <div class="fs-5">✨</div>
-                                <div class="fw-bold text-danger small">88%</div>
-                            </div>
-                        </div>
-
-                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
-                            <span class="fw-bold text-dark">Tìm bạn:</span> Đã có sẵn phòng bên Quận 7, cần tìm 1 nữ ở
-                            ghép share tiền.
-                        </div>
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Dậy sớm</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Nấu ăn</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Yên tĩnh</span>
-                        </div>
-
-                        <!-- 2 Nút CTA mới -->
-                        <div class="d-flex gap-2 mt-auto">
-                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
-                                onclick="window.location.href='cus_profile.html'">
-                                👤 Hồ sơ
-                            </button>
-                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
-                                onclick="window.location.href='chat.html'">
-                                💬 Nhắn tin
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CARD 3: Trần Phát -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
-
-                        <!-- Header (Click để vào Profile) -->
-                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;"
-                            onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'"
-                            onmouseout="this.style.opacity='1'">
-                            <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm"
-                                style="width: 60px; height: 60px;">
-                                TP
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1 text-dark">Trần Phát <span
-                                        class="badge badge-kyc ms-1">✔️</span></h6>
-                                <p class="text-muted small mb-0">Quản trị Kinh doanh</p>
-                            </div>
-                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
-                                <div class="fs-5">👍</div>
-                                <div class="fw-bold text-danger small">75%</div>
-                            </div>
-                        </div>
-
-                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
-                            <span class="fw-bold text-dark">Tìm phòng:</span> Tài chính thả ga, cần tìm bạn thoải mái,
-                            có thể nuôi mèo.
-                        </div>
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Thức khuya</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Yêu mèo</span>
-                            <span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">Dẫn bạn về</span>
-                        </div>
-
-                        <!-- 2 Nút CTA mới -->
-                        <div class="d-flex gap-2 mt-auto">
-                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill"
-                                onclick="window.location.href='cus_profile.html'">
-                                👤 Hồ sơ
-                            </button>
-                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm"
-                                onclick="window.location.href='chat.html'">
-                                💬 Nhắn tin
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+            <!-- Sân bãi trống chờ API bơm dữ liệu vào -->
+            <div class="row g-4" id="mates-container"></div>
         </div>
 
     </div>
+
     <!-- =================== GIAO DIỆN BỘ LỌC (OFFCANVAS) =================== -->
-    <div class="offcanvas offcanvas-end rounded-start-4 border-0 shadow" tabindex="-1" id="filterOffcanvas"
-        style="width: 380px;">
-
-        <!-- Phần Tiêu đề -->
+    <div class="offcanvas offcanvas-end rounded-start-4 border-0 shadow" tabindex="-1" id="filterOffcanvas" style="width: 380px;">
         <div class="offcanvas-header border-bottom bg-light">
-            <h5 class="offcanvas-title fw-bold text-primary d-flex align-items-center gap-2">
-                ⚙️ Bộ lọc nâng cao
-            </h5>
-            <!-- Nút dấu X để đóng -->
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <h5 class="offcanvas-title fw-bold text-primary d-flex align-items-center gap-2">⚙️ Bộ lọc nâng cao</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
-
-        <!-- Phần Nội dung (Các ô chọn bộ lọc) -->
         <div class="offcanvas-body p-4">
-            <form>
-                <!-- 1. Lọc theo Khu vực -->
+            <form id="filter-form">
                 <div class="mb-4">
                     <label class="form-label fw-bold text-dark small">📍 KHU VỰC / QUẬN</label>
-                    <select class="form-select rounded-3 shadow-sm">
+                    <select id="filter-district" class="form-select rounded-3 shadow-sm">
                         <option value="">-- Tất cả khu vực --</option>
                         <option value="Quận 4">Quận 4 (Gần cơ sở Tôn Thất Thuyết)</option>
                         <option value="Quận 7">Quận 7 (Gần cơ sở Nguyễn Hữu Thọ)</option>
@@ -325,11 +78,9 @@
                         <option value="Thủ Đức">TP. Thủ Đức (Làng Đại học)</option>
                     </select>
                 </div>
-
-                <!-- 2. Lọc theo Khoảng giá -->
                 <div class="mb-4">
                     <label class="form-label fw-bold text-dark small">💰 KHOẢNG GIÁ (THÁNG)</label>
-                    <select class="form-select rounded-3 shadow-sm">
+                    <select id="filter-price" class="form-select rounded-3 shadow-sm">
                         <option value="">-- Tất cả mức giá --</option>
                         <option value="under2">Dưới 2.000.000 đ</option>
                         <option value="2to3">Từ 2.000.000 - 3.500.000 đ</option>
@@ -337,11 +88,9 @@
                         <option value="above5">Trên 5.000.000 đ</option>
                     </select>
                 </div>
-
-                <!-- 3. Lọc theo Tiện ích (Nút gạt Switch) -->
+                <!-- ĐÃ TRẢ LẠI MỤC TIỆN ÍCH -->
                 <div class="mb-4">
                     <label class="form-label fw-bold text-dark small mb-3">✨ TIỆN ÍCH PHÒNG</label>
-
                     <div class="d-flex flex-column gap-2">
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="ui-aircon">
@@ -353,35 +102,28 @@
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="ui-freetime">
-                            <label class="form-check-label" for="ui-freetime">🔑 Giờ giấc tự do (Không chung
-                                chủ)</label>
+                            <label class="form-check-label" for="ui-freetime">🔑 Giờ giấc tự do</label>
                         </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="ui-pet">
-                            <label class="form-check-label" for="ui-pet">🐱 Cho phép nuôi Thú cưng (Pet)</label>
+                            <label class="form-check-label" for="ui-pet">🐱 Cho phép nuôi Thú cưng</label>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-
-        <!-- Phần Đáy (Nút Đặt lại & Áp dụng) -->
         <div class="offcanvas-footer border-top p-3 bg-light d-flex gap-2">
-            <button type="reset" class="btn btn-outline-secondary w-50 fw-bold rounded-pill">
-                🔄 Đặt lại
-            </button>
-            <!-- Thẻ data-bs-dismiss giúp bấm nút Áp dụng xong nó tự trượt đóng lại -->
-            <button id="btn-apply-filter" type="button" class="btn btn-primary w-50 fw-bold rounded-pill shadow-sm"
-                onclick="applyFilter()">
-                🔍 Áp dụng
-            </button>
+            <button type="button" class="btn btn-outline-secondary w-50 fw-bold rounded-pill" onclick="document.getElementById('filter-form').reset()">🔄 Đặt lại</button>
+            <button id="btn-apply-filter" type="button" class="btn btn-primary w-50 fw-bold rounded-pill shadow-sm" onclick="applyFilter()">🔍 Áp dụng</button>
         </div>
     </div>
     <!-- =================== HẾT MENU TRƯỢT =================== -->
+
+    <!-- CÁC SCRIPT CHUNG -->
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- CÁC HÀM XỬ LÝ GIAO DIỆN CŨ (GIỮ NGUYÊN) -->
+
+    <!-- TÍNH NĂNG CHUYỂN TAB VÀ YÊU THÍCH -->
     <script>
         function switchTab(tabName) {
             const roomTab = document.getElementById('tab-rooms');
@@ -406,144 +148,223 @@
             }
         }
 
-        function toggleHeart(buttonElement) {
+       function toggleHeart(buttonElement, roomId) {
+            // Lấy khay chứa tim từ trình duyệt, nếu chưa có thì tạo khay trống []
+            let savedRooms = JSON.parse(localStorage.getItem('savedRooms')) || [];
+            
             const isLiked = buttonElement.classList.contains('active');
             if (isLiked) {
+                // Hủy tim: Rút màu đỏ, xóa ID khỏi khay
                 buttonElement.classList.remove('active');
                 buttonElement.innerHTML = '🤍';
+                savedRooms = savedRooms.filter(id => id !== roomId);
             } else {
+                // Thả tim: Bôi đỏ, nhét ID vào khay
                 buttonElement.classList.add('active');
                 buttonElement.innerHTML = '❤️';
+                if (!savedRooms.includes(roomId)) savedRooms.push(roomId);
             }
+            
+            // Cất khay lại vào bộ nhớ trình duyệt
+            localStorage.setItem('savedRooms', JSON.stringify(savedRooms));
         }
-        
+
+        // BỘ LỌC ĐA NĂNG (FRONTEND FILTER - BẢN HOÀN CHỈNH)
         function applyFilter() {
             const btn = document.getElementById('btn-apply-filter');
             btn.innerHTML = '⏳ Đang lọc...';
             btn.disabled = true;
-            setTimeout(() => {
-                btn.innerHTML = '🔍 Áp dụng';
-                btn.disabled = false;
-                const offcanvasElement = document.getElementById('filterOffcanvas');
-                const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasElement);
-                offcanvas.hide();
-            }, 800);
+
+            const selectedDistrict = document.getElementById('filter-district').value;
+            const selectedPrice = document.getElementById('filter-price').value;
+
+            fetch('http://localhost:3000/api/rooms')
+                .then(res => res.json())
+                .then(allRooms => {
+                    const filteredRooms = allRooms.filter(room => {
+                        // 1. Lọc Khu vực
+                        if (selectedDistrict && !room.address.includes(selectedDistrict)) return false;
+
+                        // 2. Lọc Giá tiền
+                        if (selectedPrice) {
+                            const priceNumber = parseInt(room.price.replace(/\D/g, ''));
+                            if (selectedPrice === 'under2' && priceNumber >= 2000000) return false;
+                            if (selectedPrice === '2to3' && (priceNumber < 2000000 || priceNumber > 3500000)) return false;
+                            if (selectedPrice === '3to5' && (priceNumber < 3500000 || priceNumber > 5000000)) return false;
+                            if (selectedPrice === 'above5' && priceNumber <= 5000000) return false;
+                        }
+
+                        // 3. Lọc Tiện ích
+                        const roomUtils = room.utilities.join(' ').toLowerCase();
+                        if (document.getElementById('ui-aircon').checked && !roomUtils.includes('điều hòa') && !roomUtils.includes('máy lạnh')) return false;
+                        if (document.getElementById('ui-parking').checked && !roomUtils.includes('để xe')) return false;
+                        if (document.getElementById('ui-freetime').checked && !roomUtils.includes('tự do')) return false;
+                        if (document.getElementById('ui-pet').checked && !roomUtils.includes('thú cưng') && !roomUtils.includes('pet')) return false;
+
+                        return true; 
+                    });
+                    
+                    // --- VẼ KẾT QUẢ RA MÀN HÌNH ---
+                    const container = document.getElementById('rooms-container');
+                    container.innerHTML = ''; 
+                    
+                    if (filteredRooms.length === 0) {
+                        container.innerHTML = `
+                        <div class="col-12 text-center py-5 text-muted">
+                            <div class="fs-1 mb-2">🕵️‍♂️</div>
+                            <h5>Không tìm thấy phòng nào phù hợp với bộ lọc!</h5>
+                        </div>`;
+                    } else {
+                        filteredRooms.forEach(room => {
+                            let utilitiesHtml = room.utilities.map(util => `<span class="badge bg-light text-dark border">${util}</span>`).join('');
+                            container.innerHTML += `
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="card listing-card shadow-sm h-100 border-0">
+                                    <div class="position-relative">
+                                        <img src="${room.image}" class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
+                                        <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5" onclick="toggleHeart(this)">🤍</button>
+                                    </div>
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="fw-bold text-dark mb-2">${room.title}</h6>
+                                        <h5 class="fw-bold text-primary mb-2">${room.price}</h5>
+                                        <p class="text-muted small mb-3">${room.address}</p>
+                                        <div class="d-flex gap-2 mb-4 flex-wrap">${utilitiesHtml}</div>
+                                        <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                            <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
+                                            <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" onclick="window.location.href='room_detail.html'">Xem chi tiết</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        });
+                    }
+
+                    setTimeout(() => {
+                        btn.innerHTML = '🔍 Áp dụng';
+                        btn.disabled = false;
+                        const offcanvasElement = document.getElementById('filterOffcanvas');
+                        bootstrap.Offcanvas.getInstance(offcanvasElement).hide();
+                    }, 400);
+                });
         }
     </script>
-    
-    <!-- Bãi đáp cho Footer -->
+
+    <!-- Nạp Footer -->
     <div id="footer-placeholder"></div>
     <script>
         fetch('footer.html')
             .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            });
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
     </script>
 
     <!-- ============================================== -->
     <!-- KẾT NỐI BACKEND VÀ ĐỔ DỮ LIỆU LÊN UI -->
     <!-- ============================================== -->
     <script>
-        // --- 1. XỬ LÝ TAB PHÒNG TRỌ ---
-        function fetchRoomsFromBackend() {
-            fetch('http://localhost:3000/api/rooms')
+        // 1. TẢI VÀ VẼ PHÒNG TRỌ (ĐÃ NÂNG CẤP TÌM KIẾM)
+        function fetchRoomsFromBackend(searchKeyword = '') {
+            // Nếu có từ khóa thì gắn vào link API, nếu không thì lấy link gốc
+            const apiUrl = searchKeyword
+                ? `http://localhost:3000/api/rooms?search=${encodeURIComponent(searchKeyword)}`
+                : 'http://localhost:3000/api/rooms';
+
+            fetch(apiUrl)
                 .then(response => response.json())
-                .then(data => renderRooms(data))
+                .then(rooms => {
+                    const container = document.getElementById('rooms-container');
+                    container.innerHTML = '';
+
+                    // Nếu không tìm thấy phòng nào
+                    if (rooms.length === 0) {
+                        container.innerHTML = `
+                        <div class="col-12 text-center py-5 text-muted">
+                            <div class="fs-1 mb-2">🕵️‍♂️</div>
+                            <h5>Không tìm thấy phòng nào khớp với "${searchKeyword}"</h5>
+                        </div>`;
+                        return;
+                    }
+
+                    // Nếu có phòng thì vẽ ra như bình thường
+                    rooms.forEach(room => {
+                        let utilitiesHtml = room.utilities.map(util => `<span class="badge bg-light text-dark border">${util}</span>`).join('');
+                        container.innerHTML += `
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card listing-card shadow-sm h-100 border-0">
+                                <div class="position-relative">
+                                    <img src="${room.image}" class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
+                                   <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5" onclick="toggleHeart(this, '${room._id}')">🤍</button>
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="fw-bold text-dark mb-2">${room.title}</h6>
+                                    <h5 class="fw-bold text-primary mb-2">${room.price}</h5>
+                                    <p class="text-muted small mb-3">${room.address}</p>
+                                    <div class="d-flex gap-2 mb-4 flex-wrap">${utilitiesHtml}</div>
+                                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                                        <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
+                                        <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" onclick="window.location.href='room_detail.html?id=${room._id}'">Xem chi tiết</button>
+                                    </div>
+                                </div>
+                            </div>      
+                        </div>`;
+                    });
+                })
                 .catch(error => console.error("❌ Lỗi tải phòng:", error));
         }
 
-        function renderRooms(rooms) {
-            const container = document.querySelector('#tab-rooms .row');
-            container.innerHTML = ''; // Xóa data cứng
-            
-            rooms.forEach(room => {
-                let utilitiesHtml = '';
-                room.utilities.forEach(util => {
-                    utilitiesHtml += `<span class="badge bg-light text-dark border">${util}</span>`;
-                });
-
-                container.innerHTML += `
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 border-0">
-                        <div class="position-relative">
-                            <img src="${room.image}" class="room-img w-100" style="height: 200px; object-fit: cover;" alt="Phòng trọ">
-                            <button class="position-absolute top-0 end-0 m-2 btn-favorite fs-5" onclick="toggleHeart(this)">🤍</button>
-                            <span class="position-absolute bottom-0 start-0 m-2 badge bg-danger opacity-75">MỚI TỪ BACKEND</span>
-                        </div>
-                        <div class="card-body d-flex flex-column">
-                            <h6 class="fw-bold text-dark mb-2">${room.title}</h6>
-                            <h5 class="fw-bold text-primary mb-2">${room.price}</h5>
-                            <p class="text-muted small mb-3">${room.address}</p>
-                            <div class="d-flex gap-2 mb-4 flex-wrap">${utilitiesHtml}</div>
-                            <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
-                                <span class="badge badge-kyc rounded-pill px-2 py-1">✔️ E-KYC</span>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill px-3 fw-bold" onclick="window.location.href='room_detail.html'">Xem chi tiết</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            });
-        }
-
-        // --- 2. XỬ LÝ TAB NGƯỜI GHÉP (MỚI) ---
+        // BẮT SỰ KIỆN GÕ PHÍM: Mỗi khi gõ chữ là gọi API ngay lập tức
+        document.getElementById('searchInput').addEventListener('input', function (e) {
+            const keyword = e.target.value.trim();
+            fetchRoomsFromBackend(keyword);
+        });
+        // 2. TẢI VÀ VẼ TÌM NGƯỜI GHÉP
         function fetchMatesFromBackend() {
             fetch('http://localhost:3000/api/mates')
                 .then(response => response.json())
-                .then(data => renderMates(data))
+                .then(mates => {
+                    const container = document.getElementById('mates-container');
+                    container.innerHTML = '';
+
+                    mates.forEach(mate => {
+                        let traitsHtml = mate.traits.map(trait => `<span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">${trait}</span>`).join('');
+                        container.innerHTML += `
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card listing-card shadow-sm h-100 p-4 border-0">
+                                <!-- ĐÃ SỬA LINK TRUYỀN ID Ở ĐÂY -->
+                                <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;" onclick="window.location.href='cus_profile.html?id=${mate._id}'" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                                    <div class="rounded-circle ${mate.avatarColor} text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm" style="width: 60px; height: 60px;">
+                                        ${mate.avatarText}
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1 text-dark">${mate.name} <span class="badge badge-kyc ms-1">✔️</span></h6>
+                                        <p class="text-muted small mb-0">${mate.major}</p>
+                                    </div>
+                                    <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
+                                        <div class="fs-5">${mate.icon}</div>
+                                        <div class="fw-bold text-danger small">${mate.matchPercent}</div>
+                                    </div>
+                                </div>
+                                <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
+                                    ${mate.bio}
+                                </div>
+                                <div class="d-flex flex-wrap gap-2 mb-4">${traitsHtml}</div>
+                                <div class="d-flex gap-2 mt-auto">
+                                    <!-- VÀ SỬA LINK Ở ĐÂY -->
+                                    <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill" onclick="window.location.href='cus_profile.html?id=${mate._id}'">👤 Hồ sơ</button>
+                                    <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm" onclick="window.location.href='chat.html?name=${encodeURIComponent(mate.name)}'">💬 Nhắn tin</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                })
                 .catch(error => console.error("❌ Lỗi tải người ghép:", error));
         }
 
-        function renderMates(mates) {
-            const container = document.querySelector('#tab-mates .row');
-            container.innerHTML = ''; // Xóa data cứng
-            
-            mates.forEach(mate => {
-                let traitsHtml = '';
-                mate.traits.forEach(trait => {
-                    traitsHtml += `<span class="badge bg-primary-subtle text-primary py-2 px-3 rounded-pill">${trait}</span>`;
-                });
-
-                container.innerHTML += `
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card listing-card shadow-sm h-100 p-4 border-0">
-                        <!-- Thêm tag MỚI TỪ BACKEND cho ngầu -->
-                        <div class="position-absolute top-0 end-0 m-2 badge bg-danger opacity-75" style="font-size: 0.6rem;">MỚI TỪ BACKEND</div>
-                        
-                        <div class="d-flex align-items-center gap-3 mb-4" style="cursor: pointer; transition: 0.2s;" onclick="window.location.href='cus_profile.html'" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
-                            <div class="rounded-circle ${mate.avatarColor} text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm" style="width: 60px; height: 60px;">
-                                ${mate.avatarText}
-                            </div>
-                            <div>
-                                <h6 class="fw-bold mb-1 text-dark">${mate.name} <span class="badge badge-kyc ms-1">✔️</span></h6>
-                                <p class="text-muted small mb-0">${mate.major}</p>
-                            </div>
-                            <div class="ms-auto text-center bg-danger-subtle rounded px-2 py-1">
-                                <div class="fs-5">${mate.icon}</div>
-                                <div class="fw-bold text-danger small">${mate.matchPercent}</div>
-                            </div>
-                        </div>
-                        <div class="bg-light p-3 rounded-3 small text-secondary mb-4 border">
-                            ${mate.bio}
-                        </div>
-                        <div class="d-flex flex-wrap gap-2 mb-4">
-                            ${traitsHtml}
-                        </div>
-                        <div class="d-flex gap-2 mt-auto">
-                            <button class="btn btn-outline-primary w-50 py-2 fw-bold rounded-pill" onclick="window.location.href='cus_profile.html'">👤 Hồ sơ</button>
-                            <button class="btn btn-success w-50 py-2 fw-bold rounded-pill shadow-sm" onclick="window.location.href='chat.html'">💬 Nhắn tin</button>
-                        </div>
-                    </div>
-                </div>`;
-            });
-        }
-
-        // --- 3. GỌI API KHI TRANG LOAD ---
-        fetchRoomsFromBackend();
-        fetchMatesFromBackend();
+        // 3. CHẠY HÀM KHI TRANG VỪA MỞ
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchRoomsFromBackend();
+            fetchMatesFromBackend();
+        });
     </script>
-</body>
-</html>
 </body>
 
 </html>

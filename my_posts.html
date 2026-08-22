@@ -37,26 +37,117 @@
             </div>
         </div>
 
-        <!-- DANH SÁCH TIN ĐĂNG TỰ ĐỘNG ĐỔ VỀ TỪ MONGODB -->
-        <div class="row g-4" id="my-posts-container">
-            <!-- Dữ liệu sẽ tự động xuất hiện ở đây -->
+        <!-- ============================================== -->
+        <!-- MENU CHUYỂN TAB (MỚI THÊM)                     -->
+        <!-- ============================================== -->
+        <div class="row mb-4">
+            <div class="col-lg-6">
+                <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill shadow-sm">
+                    <li class="nav-item">
+                        <button class="nav-link active w-100 fw-bold" id="btn-tab-rooms" onclick="switchMyTab('rooms')">Phòng Cho Thuê</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link w-100 fw-bold text-dark btn-light" id="btn-tab-mates" onclick="switchMyTab('mates')">Hồ Sơ Ghép Trọ</button>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Trạng thái trống (sẽ hiển thị khi xóa hết tin) -->
-        <div id="empty-posts-state" class="text-center py-5 d-none">
-            <div class="fs-1 mb-3">📝</div>
-            <h5 class="fw-bold text-dark">Bạn chưa đăng tin nào</h5>
-            <p class="text-muted small">Hãy đăng tin cho thuê phòng hoặc tìm người ở ghép để kết nối với mọi người.</p>
-            <button class="btn btn-primary rounded-pill px-4 fw-bold mt-2"
-                onclick="window.location.href='post_room.html'">Đăng tin đầu tiên</button>
+        <!-- ============================================== -->
+        <!-- TAB 1: PHÒNG TRỌ                               -->
+        <!-- ============================================== -->
+        <div id="my-rooms-section" style="display: block; animation: fadeIn 0.4s;">
+            <!-- DANH SÁCH TIN ĐĂNG TỰ ĐỘNG ĐỔ VỀ TỪ MONGODB -->
+            <div class="row g-4" id="my-posts-container">
+                <!-- Dữ liệu sẽ tự động xuất hiện ở đây -->
+            </div>
+
+            <!-- Trạng thái trống (sẽ hiển thị khi xóa hết tin) -->
+            <div id="empty-posts-state" class="text-center py-5 d-none bg-white rounded-4 shadow-sm mt-3">
+                <div class="fs-1 mb-3">📝</div>
+                <h5 class="fw-bold text-dark">Bạn chưa đăng tin nào</h5>
+                <p class="text-muted small">Hãy đăng tin cho thuê phòng để kết nối với mọi người.</p>
+                <button class="btn btn-primary rounded-pill px-4 fw-bold mt-2" onclick="window.location.href='post_room.html'">Đăng tin đầu tiên</button>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB 2: NGƯỜI GHÉP (MỚI THÊM)                   -->
+        <!-- ============================================== -->
+        <div id="my-mates-section" style="display: none; animation: fadeIn 0.4s;">
+            <div class="row g-4" id="my-mates-container">
+                <!-- Dữ liệu hồ sơ ghép đổ vào đây -->
+            </div>
+            
+            <div id="empty-mates-state" class="text-center py-5 d-none bg-white rounded-4 shadow-sm mt-3">
+                <div class="fs-1 mb-3">🤝</div>
+                <h5 class="fw-bold text-dark">Bạn chưa tạo hồ sơ tìm bạn ghép</h5>
+                <button class="btn btn-success rounded-pill px-4 fw-bold mt-2" onclick="window.location.href='post_room.html'">Tạo hồ sơ ngay</button>
+            </div>
         </div>
 
     </div>
 
+    <!-- BẢNG HỘP THOẠI SỬA TIN (MODAL) CỦA BẠN - GIỮ NGUYÊN -->
+    <div class="modal fade" id="editRoomModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">✏️ Chỉnh sửa tin đăng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="edit-id"> <!-- Nơi giấu ID phòng -->
+                    <div class="mb-3">
+                        <label class="fw-bold">Tiêu đề</label>
+                        <input type="text" id="edit-title" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Giá thuê</label>
+                        <input type="text" id="edit-price" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="fw-bold">Địa chỉ</label>
+                        <input type="text" id="edit-address" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary fw-bold rounded-pill" onclick="saveEdit()">💾 Lưu thay đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-        // 1. HÀM TẢI DỮ LIỆU TỪ BACKEND
+        // ==============================================
+        // HÀM CHUYỂN TAB 
+        // ==============================================
+        function switchMyTab(tab) {
+            const btnRooms = document.getElementById('btn-tab-rooms');
+            const btnMates = document.getElementById('btn-tab-mates');
+            const secRooms = document.getElementById('my-rooms-section');
+            const secMates = document.getElementById('my-mates-section');
+
+            if(tab === 'rooms') {
+                secRooms.style.display = 'block';
+                secMates.style.display = 'none';
+                btnRooms.className = 'nav-link active w-100 fw-bold';
+                btnMates.className = 'nav-link w-100 fw-bold text-dark btn-light';
+            } else {
+                secRooms.style.display = 'none';
+                secMates.style.display = 'block';
+                btnMates.className = 'nav-link active w-100 fw-bold';
+                btnRooms.className = 'nav-link w-100 fw-bold text-dark btn-light';
+            }
+        }
+
+        // ==============================================
+        // HÀM TẢI DỮ LIỆU PHÒNG TRỌ (CỦA BẠN - GIỮ NGUYÊN)
+        // ==============================================
         function loadMyPosts() {
             fetch('http://localhost:3000/api/rooms')
                 .then(res => res.json())
@@ -71,9 +162,7 @@
 
                     // Duyệt qua từng phòng và "vẽ" giao diện
                     rooms.forEach(room => {
-                        // Trích xuất ngày hôm nay giả lập ngày đăng
                         const today = new Date().toLocaleDateString('vi-VN');
-
                         const postHTML = `
                             <div class="col-12" id="post-${room._id}">
                                 <div class="card post-card shadow-sm border-0 overflow-hidden">
@@ -85,23 +174,19 @@
                                             <div class="card-body d-flex flex-column h-100 p-4">
                                                 <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
                                                     <h5 class="fw-bold text-dark mb-0">${room.title}</h5>
-                                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-medium" id="status-badge-${room._id}">
-                                                        🟢 Đang hiển thị
-                                                    </span>
+                                                    <span class="badge bg-success text-white px-3 py-2 rounded-pill fw-medium" id="status-badge-${room._id}">🟢 Đang hiển thị</span>
                                                 </div>
                                                 <p class="text-muted small mb-2">${room.address}</p>
                                                 <h5 class="fw-bold text-primary mb-3">${room.price}</h5>
 
-                                                <!-- Thống kê (Giả lập số liệu cho đẹp) -->
                                                 <div class="d-flex gap-4 mb-3 small text-secondary fw-medium">
                                                     <span>👀 ${Math.floor(Math.random() * 100) + 10} lượt xem</span>
                                                     <span>❤️ ${Math.floor(Math.random() * 20)} người lưu</span>
                                                     <span>📅 Đăng ngày: ${today}</span>
                                                 </div>
 
-                                                <!-- Các nút hành động -->
                                                 <div class="mt-auto d-flex gap-2 flex-wrap pt-3 border-top">
-                                                    <button class="btn btn-outline-primary action-btn fw-bold rounded-pill px-3" onclick="alert('Chuyển đến trang Chỉnh sửa thông tin!')">✏️ Sửa tin</button>
+                                                    <button class="btn btn-outline-primary action-btn fw-bold rounded-pill px-3" onclick="openEditModal('${room._id}', '${room.title}', '${room.price}', '${room.address}')">✏️ Sửa tin</button>
                                                     <button class="btn btn-outline-warning action-btn fw-bold rounded-pill px-3" id="toggle-btn-${room._id}" onclick="togglePostVisibility('${room._id}')">👁️‍🗨️ Ẩn tin</button>
                                                     <button class="btn btn-outline-success action-btn fw-bold rounded-pill px-3" id="rented-btn-${room._id}" onclick="markAsRented('${room._id}')">🤝 Đã tìm được người</button>
                                                     <button class="btn btn-outline-danger action-btn fw-bold rounded-pill px-3 ms-auto" onclick="deletePost('${room._id}')">🗑️ Xóa</button>
@@ -118,18 +203,79 @@
                 .catch(error => console.error('❌ Lỗi tải danh sách:', error));
         }
 
-        // Tự động tải danh sách khi vừa mở trang
-        document.addEventListener("DOMContentLoaded", loadMyPosts);
+        // ==============================================
+        // HÀM TẢI DỮ LIỆU TÌM GHÉP (MỚI THÊM)
+        // ==============================================
+        function loadMyMates() {
+            fetch('http://localhost:3000/api/mates')
+                .then(res => res.json())
+                .then(mates => {
+                    const container = document.getElementById('my-mates-container');
+                    const emptyState = document.getElementById('empty-mates-state');
+                    container.innerHTML = ''; 
 
-        // 2. HÀM ẨN / HIỆN TIN (Xử lý giao diện)
+                    if (mates.length === 0) {
+                        emptyState.classList.remove('d-none');
+                        return;
+                    }
+                    emptyState.classList.add('d-none');
+
+                    mates.forEach(mate => {
+                        let traitsHtml = mate.traits.map(t => `<span class="badge bg-light text-dark border">${t}</span>`).join('');
+                        const mateHTML = `
+                            <div class="col-12 col-md-6" id="mate-${mate._id}">
+                                <div class="card shadow-sm h-100 p-4 border-0 rounded-4">
+                                    <div class="d-flex align-items-center gap-3 mb-3">
+                                        <div class="rounded-circle ${mate.avatarColor} text-white d-flex align-items-center justify-content-center fw-bold fs-4 shadow-sm" style="width: 60px; height: 60px;">
+                                            ${mate.avatarText}
+                                        </div>
+                                        <div>
+                                            <h6 class="fw-bold mb-1 text-dark">${mate.name} <span class="badge bg-success-subtle text-success ms-1">Hồ sơ của bạn</span></h6>
+                                            <p class="text-muted small mb-0">${mate.major}</p>
+                                        </div>
+                                    </div>
+                                    <div class="bg-light p-3 rounded-3 small text-secondary mb-3 border">
+                                        ${mate.bio}
+                                    </div>
+                                    <div class="d-flex flex-wrap gap-2 mb-4">${traitsHtml}</div>
+                                    
+                                    <div class="mt-auto d-flex pt-3 border-top">
+                                        <button class="btn btn-outline-danger w-100 py-2 fw-bold rounded-pill" onclick="deleteMate('${mate._id}')">🗑️ Gỡ hồ sơ</button>
+                                    </div>
+                                </div>
+                            </div>`;
+                        container.innerHTML += mateHTML;
+                    });
+                });
+        }
+
+        // --- HÀM XÓA PROFILE GHÉP ---
+        function deleteMate(id) {
+            if(!confirm("⚠️ Bạn có chắc chắn muốn gỡ hồ sơ tìm bạn ghép này?")) return;
+            fetch(`http://localhost:3000/api/mates/${id}`, { method: 'DELETE' })
+                .then(() => {
+                    document.getElementById(`mate-${id}`).remove();
+                    if(document.getElementById('my-mates-container').children.length === 0) {
+                        document.getElementById('empty-mates-state').classList.remove('d-none');
+                    }
+                });
+        }
+
+        // Chạy cả 2 hàm tải khi mở trang
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMyPosts();
+            loadMyMates();
+        });
+
+        // ==============================================
+        // CÁC HÀM CŨ CỦA BẠN (GIỮ NGUYÊN 100%)
+        // ==============================================
         function togglePostVisibility(postId) {
             const container = document.getElementById(`post-${postId}`);
             const card = container.querySelector('.card');
             const badge = document.getElementById(`status-badge-${postId}`);
             const toggleBtn = document.getElementById(`toggle-btn-${postId}`);
-            
             const isHidden = card.classList.contains('post-inactive');
-
             if (isHidden) {
                 card.classList.remove('post-inactive');
                 badge.className = 'badge bg-success text-white px-3 py-2 rounded-pill fw-medium';
@@ -145,63 +291,78 @@
             }
         }
 
-        // 3. HÀM ĐÁNH DẤU CHO THUÊ XONG (Xử lý giao diện)
         function markAsRented(postId) {
             const confirmAction = confirm("Bạn có chắc chắn đánh dấu tin này là ĐÃ CHO THUÊ/TÌM ĐƯỢC NGƯỜI? Tin sẽ bị ẩn khỏi bảng tin chung.");
             if (!confirmAction) return;
-
             const container = document.getElementById(`post-${postId}`);
-            const card = container.querySelector('.card'); 
+            const card = container.querySelector('.card');
             const badge = document.getElementById(`status-badge-${postId}`);
             const rentedBtn = document.getElementById(`rented-btn-${postId}`);
             const toggleBtn = document.getElementById(`toggle-btn-${postId}`);
-
             card.classList.add('post-inactive');
             badge.className = 'badge bg-primary text-white px-3 py-2 rounded-pill fw-medium';
             badge.innerHTML = '🤝 Đã giao dịch xong';
             rentedBtn.disabled = true;
             rentedBtn.innerHTML = '✅ Đã hoàn tất';
-            toggleBtn.disabled = true; 
+            toggleBtn.disabled = true;
         }
 
-        // 4. HÀM XÓA TIN ĐĂNG (KẾT NỐI API)
         function deletePost(postId) {
             const confirmDelete = confirm("⚠️ CẢNH BÁO: Bạn có chắc chắn muốn XÓA VĨNH VIỄN tin đăng này không? Dữ liệu không thể khôi phục.");
             if (!confirmDelete) return;
-
-            // Bắn API gọi Node.js lên đường tiêu diệt dữ liệu
             fetch(`http://localhost:3000/api/rooms/${postId}`, {
                 method: 'DELETE'
             })
-            .then(res => res.json())
-            .then(data => {
-                // Xóa thành công trên Database thì mới Xóa trên Giao diện
-                const container = document.getElementById(`post-${postId}`);
-                
-                // Hiệu ứng thu nhỏ trước khi bay màu
-                container.style.transition = 'all 0.3s ease';
-                container.style.opacity = '0';
-                container.style.transform = 'scale(0.9)';
-                
-                setTimeout(() => {
-                    container.remove();
-                    checkEmptyPosts();
-                }, 300);
-            })
-            .catch(error => {
-                alert("❌ Có lỗi xảy ra khi kết nối máy chủ!");
-                console.error(error);
-            });
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById(`post-${postId}`);
+                    container.style.transition = 'all 0.3s ease';
+                    container.style.opacity = '0';
+                    container.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        container.remove();
+                        checkEmptyPosts();
+                    }, 300);
+                })
+                .catch(error => {
+                    alert("❌ Có lỗi xảy ra khi kết nối máy chủ!");
+                    console.error(error);
+                });
         }
 
-        // 5. HÀM KIỂM TRA DANH SÁCH TRỐNG
         function checkEmptyPosts() {
             const container = document.getElementById('my-posts-container');
             const emptyState = document.getElementById('empty-posts-state');
-            
             if (container.children.length === 0) {
                 emptyState.classList.remove('d-none');
             }
+        }
+
+        function openEditModal(id, title, price, address) {
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-title').value = title;
+            document.getElementById('edit-price').value = price;
+            document.getElementById('edit-address').value = address;
+            new bootstrap.Modal(document.getElementById('editRoomModal')).show();
+        }
+
+        function saveEdit() {
+            const roomId = document.getElementById('edit-id').value;
+            const updatedData = {
+                title: document.getElementById('edit-title').value,
+                price: document.getElementById('edit-price').value,
+                address: document.getElementById('edit-address').value
+            };
+            fetch(`http://localhost:3000/api/rooms/${roomId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert(data.message);
+                    location.reload(); 
+                });
         }
     </script>
 
@@ -213,6 +374,6 @@
                 document.getElementById('footer-placeholder').innerHTML = data;
             });
     </script>
-</body>
 
+</body>
 </html>

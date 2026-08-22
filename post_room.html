@@ -22,8 +22,7 @@
 
         <div class="mb-4">
             <h2 class="fw-bold text-dark mb-1">Đăng tin cho thuê / Tìm ở ghép</h2>
-            <p class="text-muted small">Thông tin của bạn sẽ được kiểm duyệt bằng AI trước khi hiển thị công khai trên
-                Bảng tin.</p>
+            <p class="text-muted small">Thông tin của bạn sẽ được kiểm duyệt bằng AI trước khi hiển thị công khai trên Bảng tin.</p>
         </div>
 
         <div class="row g-4">
@@ -34,92 +33,131 @@
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-secondary">Loại tin đăng</label>
-                        <select class="form-select"
-                            style="border-radius: var(--border-radius-md); padding: 0.75rem 1rem;">
+                        <!-- GẮN ID VÀ SỰ KIỆN ĐỔI FORM -->
+                        <select id="post-type" class="form-select" style="border-radius: var(--border-radius-md); padding: 0.75rem 1rem;" onchange="toggleForm()">
                             <option value="room">🏠 Cho thuê phòng trọ chính chủ</option>
                             <option value="mate">🤝 Tìm người ở ghép (Share tiền phòng)</option>
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold text-secondary">Tiêu đề bài đăng <span
-                                class="text-danger">*</span></label>
-                        <input id="post-title" type="text" class="form-control"
-                            placeholder="VD: Phòng ban công thoáng mát gần ĐH Nguyễn Tất Thành">
-                    </div>
-
-                    <div class="row g-3 mb-3">
-                        <div class="col-sm-6">
-                            <label class="form-label small fw-bold text-secondary">Giá cho thuê (VNĐ/tháng) <span
-                                    class="text-danger">*</span></label>
-                            <input id="post-price" type="number" class="form-control" placeholder="VD: 3500000">
+                    <!-- ============================================== -->
+                    <!-- FORM 1: PHÒNG TRỌ (Hiển thị mặc định)          -->
+                    <!-- ============================================== -->
+                    <div id="form-room-section">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Tiêu đề bài đăng <span class="text-danger">*</span></label>
+                            <input id="post-title" type="text" class="form-control" placeholder="VD: Phòng ban công thoáng mát gần ĐH Nguyễn Tất Thành">
                         </div>
-                        <div class="col-sm-6">
-                            <label class="form-label small fw-bold text-secondary">Diện tích (m²)</label>
-                            <input type="number" class="form-control" placeholder="VD: 25">
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-secondary">Giá cho thuê (VNĐ/tháng) <span class="text-danger">*</span></label>
+                                <input id="post-price" type="number" class="form-control" placeholder="VD: 3500000">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-secondary">Diện tích (m²)</label>
+                                <input type="number" class="form-control" placeholder="VD: 25">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-secondary">Địa chỉ chi tiết <span class="text-danger">*</span></label>
+                            <input id="post-address" type="text" class="form-control" placeholder="Số nhà, Tên đường, Phường/Xã, Quận/Huyện">
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label small fw-bold text-secondary">Mô tả chi tiết phòng trọ</label>
+                            <textarea class="form-control" rows="5" placeholder="Mô tả về giờ giấc, nội thất có sẵn, tiền điện nước, quy định của phòng..."></textarea>
                         </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold text-secondary">Địa chỉ chi tiết <span
-                                class="text-danger">*</span></label>
-                        <input id="post-address" type="text" class="form-control"
-                            placeholder="Số nhà, Tên đường, Phường/Xã, Quận/Huyện">
+                    <!-- ============================================== -->
+                    <!-- FORM 2: TÌM NGƯỜI GHÉP (Ẩn mặc định)           -->
+                    <!-- ============================================== -->
+                    <div id="form-mate-section" class="d-none">
+                        <div class="row g-3 mb-3">
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-secondary">Họ và Tên <span class="text-danger">*</span></label>
+                                <input id="mate-name" type="text" class="form-control" placeholder="VD: Hoàng Minh">
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-secondary">Ngành học <span class="text-danger">*</span></label>
+                                <input id="mate-major" type="text" class="form-control" placeholder="VD: Kỹ thuật Phần mềm">
+                            </div>
+                        </div>
+                        <div class="mb-0">
+                            <label class="form-label small fw-bold text-secondary">Giới thiệu bản thân & Yêu cầu</label>
+                            <textarea id="mate-bio" class="form-control" rows="5" placeholder="VD: Tìm bạn nam ghép chung phòng Quận 4, tài chính 2 triệu..."></textarea>
+                        </div>
                     </div>
 
-                    <div class="mb-0">
-                        <label class="form-label small fw-bold text-secondary">Mô tả chi tiết phòng trọ</label>
-                        <textarea class="form-control" rows="5"
-                            placeholder="Mô tả về giờ giấc, nội thất có sẵn, tiền điện nước, quy định của phòng..."></textarea>
-                    </div>
                 </div>
             </div>
 
             <div class="col-lg-5">
 
                 <div class="card p-4 shadow-sm border-0 mb-4">
-                    <h5 class="fw-bold text-dark mb-3">2. Tiện ích có sẵn</h5>
-                    <div class="row g-2">
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="aircon" checked>
-                                <label class="form-check-label small" for="aircon">❄️ Máy điều hòa</label>
+                    <!-- ============================================== -->
+                    <!-- CỘT PHẢI 1: TIỆN ÍCH (Cho Form Room)           -->
+                    <!-- ============================================== -->
+                    <div id="features-room-section">
+                        <h5 class="fw-bold text-dark mb-3">2. Tiện ích có sẵn</h5>
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="aircon" checked>
+                                    <label class="form-check-label small" for="aircon">❄️ Máy điều hòa</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="parking" checked>
+                                    <label class="form-check-label small" for="parking">🛵 Để xe free</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="wifi" checked>
+                                    <label class="form-check-label small" for="wifi">🌐 Wifi tốc độ cao</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="washer">
+                                    <label class="form-check-label small" for="washer">🧺 Máy giặt</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="time" checked>
+                                    <label class="form-check-label small" for="time">🔑 Giờ tự do</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pet">
+                                    <label class="form-check-label small" for="pet">🐾 Nuôi thú cưng</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="parking" checked>
-                                <label class="form-check-label small" for="parking">🛵 Để xe free</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="wifi" checked>
-                                <label class="form-check-label small" for="wifi">🌐 Wifi tốc độ cao</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="washer">
-                                <label class="form-check-label small" for="washer">🧺 Máy giặt</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="time" checked>
-                                <label class="form-check-label small" for="time">🔑 Giờ tự do</label>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="pet">
-                                <label class="form-check-label small" for="pet">🐾 Nuôi thú cưng</label>
-                            </div>
+                    </div>
+
+                    <!-- ============================================== -->
+                    <!-- CỘT PHẢI 2: TÍNH CÁCH (Cho Form Mate)          -->
+                    <!-- ============================================== -->
+                    <div id="features-mate-section" class="d-none">
+                        <h5 class="fw-bold text-dark mb-3">2. Thói quen / Tính cách</h5>
+                        <div class="row g-2">
+                            <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="trait-late" checked><label class="form-check-label small" for="trait-late">🌙 Thức khuya</label></div></div>
+                            <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="trait-early"><label class="form-check-label small" for="trait-early">🌅 Dậy sớm</label></div></div>
+                            <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="trait-clean" checked><label class="form-check-label small" for="trait-clean">✨ Gọn gàng</label></div></div>
+                            <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="trait-cook"><label class="form-check-label small" for="trait-cook">🍳 Nấu ăn</label></div></div>
+                            <div class="col-6"><div class="form-check"><input class="form-check-input" type="checkbox" id="trait-quiet" checked><label class="form-check-label small" for="trait-quiet">🤫 Yên tĩnh</label></div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="card p-4 shadow-sm border-0 mb-4">
+                <div class="card p-4 shadow-sm border-0 mb-4" id="image-upload-section">
                     <h5 class="fw-bold text-dark mb-3">3. Hình ảnh thực tế</h5>
 
                     <div id="dropzone" class="upload-dropzone" onclick="document.getElementById('file-input').click()">
@@ -128,8 +166,7 @@
                         <p class="text-muted small mb-0">Hỗ trợ JPG, PNG (Tối đa 4 ảnh)</p>
                     </div>
 
-                    <input id="file-input" type="file" multiple accept="image/*" class="d-none"
-                        onchange="handleFileSelect(event)">
+                    <input id="file-input" type="file" multiple accept="image/*" class="d-none" onchange="handleFileSelect(event)">
 
                     <div id="file-list" class="mt-3 small text-success fw-medium"></div>
                 </div>
@@ -144,43 +181,50 @@
 
         </div>
     </div>
+    
     <script src="main.js"></script>
     <script>
-        // 1. Hàm hiển thị Thumbnail (ảnh thu nhỏ) của file được chọn
+        // --- HÀM ẨN/HIỆN FORM THEO LOẠI TIN ĐĂNG ---
+        function toggleForm() {
+            const type = document.getElementById('post-type').value;
+            if (type === 'room') {
+                document.getElementById('form-room-section').classList.remove('d-none');
+                document.getElementById('features-room-section').classList.remove('d-none');
+                document.getElementById('image-upload-section').classList.remove('d-none'); // Hiện chỗ tải ảnh
+                
+                document.getElementById('form-mate-section').classList.add('d-none');
+                document.getElementById('features-mate-section').classList.add('d-none');
+            } else {
+                document.getElementById('form-room-section').classList.add('d-none');
+                document.getElementById('features-room-section').classList.add('d-none');
+                document.getElementById('image-upload-section').classList.add('d-none'); // Ẩn chỗ tải ảnh
+                
+                document.getElementById('form-mate-section').classList.remove('d-none');
+                document.getElementById('features-mate-section').classList.remove('d-none');
+            }
+        }
+
+        // --- HÀM HIỂN THỊ ẢNH CỦA BẠN (GIỮ NGUYÊN 100%) ---
         function handleFileSelect(event) {
             const files = event.target.files;
             const fileListContainer = document.getElementById('file-list');
-
-            // Xóa nội dung cũ nếu người dùng chọn lại
             fileListContainer.innerHTML = '';
-
             if (files.length > 0) {
-                // Đổi màu viền khu vực dropzone
                 document.getElementById('dropzone').style.borderColor = '#198754';
-
-                // Tạo một thẻ div chứa các ảnh nhỏ
                 const imgWrapper = document.createElement('div');
                 imgWrapper.className = 'd-flex gap-2 mt-2 flex-wrap';
-
-                // Lặp qua từng file và tạo thẻ <img>
                 Array.from(files).forEach(file => {
-                    const imgUrl = URL.createObjectURL(file); // Tạo URL tạm thời cho ảnh
+                    const imgUrl = URL.createObjectURL(file);
                     const img = document.createElement('img');
                     img.src = imgUrl;
                     img.style.width = '80px';
                     img.style.height = '80px';
                     img.style.objectFit = 'cover';
                     img.className = 'rounded-3 border shadow-sm';
-
-                    // Giải phóng bộ nhớ khi ảnh tải xong
                     img.onload = () => URL.revokeObjectURL(imgUrl);
-
                     imgWrapper.appendChild(img);
                 });
-
                 fileListContainer.appendChild(imgWrapper);
-
-                // Thêm câu thông báo
                 const textInfo = document.createElement('div');
                 textInfo.className = 'mt-2 text-success fw-bold';
                 textInfo.innerHTML = `✅ Đã chọn ${files.length} ảnh sẵn sàng tải lên!`;
@@ -188,51 +232,96 @@
             }
         }
 
-        // 2. Hàm xử lý logic kiểm tra form và Đăng tin LÊN MONGODB
+        // --- HÀM XỬ LÝ ĐĂNG TIN (THÔNG MINH HƠN) ---
         function handleSubmitPost() {
-            const title = document.getElementById('post-title').value.trim();
-            const price = document.getElementById('post-price').value.trim();
-            const address = document.getElementById('post-address').value.trim();
+            const type = document.getElementById('post-type').value;
 
-            // Kiểm tra các trường bắt buộc
-            if (!title || !price || !address) {
-                alert('⚠️ Vui lòng điền đầy đủ Tiêu đề, Giá tiền và Địa chỉ phòng trọ!');
-                return;
+            if (type === 'room') {
+                // Lấy dữ liệu Phòng trọ
+                const title = document.getElementById('post-title').value.trim();
+                const price = document.getElementById('post-price').value.trim();
+                const address = document.getElementById('post-address').value.trim();
+
+                if (!title || !price || !address) {
+                    alert('⚠️ Vui lòng điền đầy đủ Tiêu đề, Giá tiền và Địa chỉ phòng trọ!');
+                    return;
+                }
+
+                let utilitiesList = [];
+                if (document.getElementById('aircon').checked) utilitiesList.push("❄️ Điều hòa");
+                if (document.getElementById('parking').checked) utilitiesList.push("🛵 Để xe");
+                if (document.getElementById('wifi').checked) utilitiesList.push("🌐 Wifi");
+                if (document.getElementById('washer').checked) utilitiesList.push("🧺 Máy giặt");
+                if (document.getElementById('time').checked) utilitiesList.push("🔑 Tự do");
+
+                const newRoomData = {
+                    title: title,
+                    price: new Intl.NumberFormat('vi-VN').format(price) + "đ", 
+                    address: "📍 " + address,
+                    image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800",
+                    utilities: utilitiesList
+                };
+
+                fetch('http://localhost:3000/api/rooms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newRoomData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('🎉 Chúc mừng! Tin đăng của bạn đã được gửi hệ thống kiểm duyệt E-KYC thành công. Đang chuyển về Bảng tin...');
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => alert('❌ Lỗi: ' + error));
+
+            } else {
+                // Lấy dữ liệu Tìm người ghép
+                const name = document.getElementById('mate-name').value.trim();
+                const major = document.getElementById('mate-major').value.trim();
+                const bio = document.getElementById('mate-bio').value.trim();
+
+                if (!name || !major) {
+                    alert('⚠️ Vui lòng điền đủ Họ tên và Ngành học!');
+                    return;
+                }
+
+                let traitsList = [];
+                if (document.getElementById('trait-late').checked) traitsList.push("Thức khuya");
+                if (document.getElementById('trait-early').checked) traitsList.push("Dậy sớm");
+                if (document.getElementById('trait-clean').checked) traitsList.push("Gọn gàng");
+                if (document.getElementById('trait-cook').checked) traitsList.push("Nấu ăn");
+                if (document.getElementById('trait-quiet').checked) traitsList.push("Yên tĩnh");
+
+                const avatarText = name.substring(0, 2).toUpperCase();
+                const colors = ['bg-primary', 'bg-success', 'bg-danger', 'bg-warning', 'bg-info'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+                const newMateData = {
+                    name: name,
+                    major: major,
+                    matchPercent: "99%", 
+                    icon: "🔥",
+                    avatarText: avatarText,
+                    avatarColor: randomColor,
+                    bio: bio,
+                    traits: traitsList
+                };
+
+                fetch('http://localhost:3000/api/mates', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newMateData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('🎉 Chúc mừng! Hồ sơ tìm bạn ghép của bạn đã được đăng tải thành công!');
+                    window.location.href = 'dashboard.html';
+                })
+                .catch(error => alert('❌ Lỗi: ' + error));
             }
-
-            // Gom các tiện ích từ Checkbox
-            let utilitiesList = [];
-            if (document.getElementById('aircon').checked) utilitiesList.push("❄️ Điều hòa");
-            if (document.getElementById('parking').checked) utilitiesList.push("🛵 Để xe");
-            if (document.getElementById('wifi').checked) utilitiesList.push("🌐 Wifi");
-            if (document.getElementById('washer').checked) utilitiesList.push("🧺 Máy giặt");
-            if (document.getElementById('time').checked) utilitiesList.push("🔑 Tự do");
-
-            // Đóng gói dữ liệu chuẩn Form
-            const newRoomData = {
-                title: title,
-                price: price + "đ", // Thêm chữ đ vào đuôi cho đẹp
-                address: "📍 " + address,
-                image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800", // Tạm dùng ảnh mặc định
-                utilities: utilitiesList
-            };
-
-            // GỌI API ĐẨY DỮ LIỆU LÊN NODE.JS VÀ MONGODB
-            fetch('http://localhost:3000/api/rooms', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newRoomData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('🎉 Chúc mừng! Tin đăng của bạn đã được lưu thẳng vào MongoDB. Đang chuyển về Bảng tin...');
-                window.location.href = 'dashboard.html';
-            })
-            .catch(error => {
-                alert('❌ Có lỗi xảy ra khi kết nối máy chủ: ' + error);
-            });
         }
     </script>
+    
     <div id="footer-placeholder"></div>
     <script>
         fetch('footer.html')

@@ -4,15 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hồ sơ người ở ghép - UniMatch</title>
-    <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
     <style>
-        /* CSS trang trí riêng cho trang Profile */
         .cover-photo {
             height: 200px;
-            /* Dùng một ảnh phong cảnh nhẹ nhàng làm ảnh bìa mặc định */
             background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
             background-size: cover;
             background-position: center;
@@ -21,9 +17,7 @@
             width: 120px;
             height: 120px;
             border: 5px solid #fff;
-            margin-top: -60px; /* Hiệu ứng đẩy Avatar đè lên ảnh bìa */
-            background-color: #0d6efd;
-            color: white;
+            margin-top: -60px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -45,14 +39,12 @@
             border-color: #b6d4fe;
             transform: translateY(-3px);
         }
-        .habit-icon {
-            font-size: 1.8rem;
-        }
+        .habit-icon { font-size: 1.8rem; }
     </style>
 </head>
 <body class="bg-light">
 
-    <!-- Thanh điều hướng lùi (Back Button) -->
+    <!-- Thanh điều hướng lùi -->
     <div class="bg-white shadow-sm sticky-top">
         <div class="container py-3 d-flex align-items-center">
             <a href="dashboard.html" class="text-decoration-none text-dark fw-bold d-flex align-items-center gap-2">
@@ -61,120 +53,62 @@
         </div>
     </div>
 
-    <!-- Khung nội dung chính -->
     <div class="container py-5" style="max-width: 800px;">
         
-        <!-- THẺ 1: HEADER & GIỚI THIỆU CHUNG -->
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 relative">
-            
-            <!-- Huy hiệu AI Matching tuyệt đẹp góc phải -->
-            <span class="badge bg-danger position-absolute z-3 m-3 px-3 py-2 rounded-pill shadow-sm" style="top: 0; right: 0; font-size: 0.8rem;">
-                ✨ Phù hợp 95%
-            </span>
-
-            <div class="cover-photo"></div>
-            
-            <div class="card-body px-4 px-md-5 pb-5 text-center">
-                
-                <div class="profile-avatar rounded-circle mx-auto shadow-sm position-relative z-2">
-                    TH
-                </div>
-                
-                <h3 class="fw-bold mt-3 mb-1">Nguyễn Thành Huy</h3>
-                <p class="text-primary fw-medium mb-3 small">🎓 Khoa Công nghệ Thông tin - ĐH Nguyễn Tất Thành</p>
-                
-                <!-- Các tag phân loại nhanh -->
-                <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
-                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Nam</span>
-                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Sinh viên Năm 2</span>
-                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Không hút thuốc</span>
-                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Quê: Đồng Tháp</span>
-                </div>
-
-                <!-- Lời chào (Bio) -->
-                <div class="bg-light p-4 rounded-4 text-start relative">
-                    <span class="text-muted fs-3 position-absolute" style="top: 10px; left: 15px;">"</span>
-                    <p class="text-secondary mb-0 fw-medium fst-italic" style="line-height: 1.7; padding-left: 20px;">
-                        Chào mọi người! Mình là Huy, sinh viên IT nên hay code khuya một chút nhưng dùng tai nghe nên rất im lặng. Mình khá gọn gàng, thích tự nấu ăn và mong muốn tìm bạn ghép phòng thân thiện, sòng phẳng tài chính. Cuối tuần rảnh có thể làm vài ván game chung cho vui nha!
-                    </p>
-                </div>
-            </div>
+        <!-- TRẠNG THÁI LOADING -->
+        <div id="loading-spinner" class="text-center my-5">
+            <h4 class="text-muted">⏳ Đang tải hồ sơ...</h4>
         </div>
 
-        <!-- THẺ 2: CHI TIẾT LỐI SỐNG (AI TRÍCH XUẤT) -->
-        <div class="card border-0 shadow-sm rounded-4 mb-5 p-4 p-md-5">
-            <h5 class="fw-bold mb-1">Lối sống & Thói quen</h5>
-            <p class="text-muted small mb-4">Thuật toán AI đối chiếu dựa trên bài trắc nghiệm của Huy.</p>
-            
-            <div class="row g-3">
-                <!-- Thói quen 1 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">🦉</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Giờ giấc sinh hoạt</h6>
-                            <span class="text-secondary small">Cú đêm (Thường thức sau 12h)</span>
-                        </div>
+        <!-- KHUNG NỘI DUNG CHÍNH (Ẩn chờ dữ liệu) -->
+        <div id="profile-content" style="display: none; animation: fadeIn 0.4s;">
+            <!-- THẺ 1: HEADER & GIỚI THIỆU CHUNG -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4 relative">
+                <span id="mate-match" class="badge bg-danger position-absolute z-3 m-3 px-3 py-2 rounded-pill shadow-sm" style="top: 0; right: 0; font-size: 0.8rem;">
+                    Đang tính toán...
+                </span>
+
+                <div class="cover-photo"></div>
+                
+                <div class="card-body px-4 px-md-5 pb-5 text-center">
+                    <!-- AVATAR ĐỘNG -->
+                    <div id="mate-avatar" class="profile-avatar rounded-circle mx-auto shadow-sm position-relative z-2 bg-primary text-white">
+                        --
                     </div>
-                </div>
-                <!-- Thói quen 2 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">✨</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Tiêu chuẩn vệ sinh</h6>
-                            <span class="text-secondary small">Kỹ tính, dọn dẹp mỗi ngày</span>
-                        </div>
+                    
+                    <h3 id="mate-name" class="fw-bold mt-3 mb-1">Đang tải tên...</h3>
+                    <p id="mate-major" class="text-primary fw-medium mb-3 small">Đang tải ngành học...</p>
+                    
+                    <div class="d-flex justify-content-center flex-wrap gap-2 mb-4">
+                        <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Đã xác thực E-KYC</span>
+                        <span class="badge bg-light text-dark border px-3 py-2 rounded-pill fw-medium">Hoạt động sôi nổi</span>
                     </div>
-                </div>
-                <!-- Thói quen 3 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">🍳</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Thói quen ăn uống</h6>
-                            <span class="text-secondary small">Thích tự nấu, có thể thổi cơm chung</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Thói quen 4 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">🤫</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Dẫn bạn về phòng</h6>
-                            <span class="text-secondary small">Cần riêng tư, hạn chế khách khứa</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Thói quen 5 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">💰</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Thói quen tài chính</h6>
-                            <span class="text-secondary small">Đóng tiền đúng ngày, sòng phẳng</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Thói quen 6 -->
-                <div class="col-md-6">
-                    <div class="habit-item h-100">
-                        <div class="habit-icon">🚫</div>
-                        <div>
-                            <h6 class="fw-bold mb-1 small text-dark">Nuôi thú cưng</h6>
-                            <span class="text-secondary small">Không thích ồn ào, không nuôi</span>
-                        </div>
+
+                    <div class="bg-light p-4 rounded-4 text-start relative">
+                        <span class="text-muted fs-3 position-absolute" style="top: 10px; left: 15px;">"</span>
+                        <p id="mate-bio" class="text-secondary mb-0 fw-medium fst-italic" style="line-height: 1.7; padding-left: 20px;">
+                            Đang tải giới thiệu...
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- NÚT KÊU GỌI HÀNH ĐỘNG (CTA) -->
-        <div class="text-center mb-5">
-            <button class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm" onclick="window.location.href='chat.html'">
-                💬 Bắt đầu trò chuyện với Huy
-            </button>
+            <!-- THẺ 2: CHI TIẾT LỐI SỐNG -->
+            <div class="card border-0 shadow-sm rounded-4 mb-5 p-4 p-md-5">
+                <h5 class="fw-bold mb-1">Lối sống & Thói quen</h5>
+                <p class="text-muted small mb-4">Thuật toán AI đối chiếu dựa trên bài trắc nghiệm.</p>
+                
+                <div class="row g-3" id="mate-traits-container">
+                    <!-- THÓI QUEN ĐƯỢC BƠM TỰ ĐỘNG VÀO ĐÂY -->
+                </div>
+            </div>
+
+            <!-- NÚT KÊU GỌI HÀNH ĐỘNG -->
+            <div class="text-center mb-5">
+                <button id="mate-btn-chat" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-pill shadow-sm">
+                    💬 Bắt đầu trò chuyện
+                </button>
+            </div>
         </div>
 
     </div>
@@ -182,11 +116,80 @@
     <!-- Tích hợp Footer chung -->
     <div id="footer-placeholder"></div>
     <script>
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            });
+        fetch('footer.html').then(res => res.text()).then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    </script>
+
+    <!-- KẾT NỐI API VÀ ĐỔ DỮ LIỆU ĐỘNG -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const mateId = urlParams.get('id');
+
+            if(!mateId) {
+                document.getElementById('loading-spinner').innerHTML = '<h4 class="text-danger">⚠️ Lỗi: Không tìm thấy hồ sơ!</h4>';
+                return;
+            }
+
+            // Từ điển thông dịch tính cách sang Icon siêu đẹp
+            const traitDictionary = {
+                "Thức khuya": { icon: "🦉", title: "Giờ giấc sinh hoạt", desc: "Cú đêm (Thường thức sau 12h)" },
+                "Dậy sớm": { icon: "🌅", title: "Giờ giấc sinh hoạt", desc: "Dậy sớm, sinh hoạt điều độ" },
+                "Gọn gàng": { icon: "✨", title: "Tiêu chuẩn vệ sinh", desc: "Kỹ tính, dọn dẹp mỗi ngày" },
+                "Nấu ăn": { icon: "🍳", title: "Thói quen ăn uống", desc: "Thích tự nấu, ăn uống lành mạnh" },
+                "Yên tĩnh": { icon: "🤫", title: "Không gian chung", desc: "Cần riêng tư, hạn chế ồn ào" }
+            };
+
+            fetch(`http://localhost:3000/api/mates/${mateId}`)
+                .then(res => {
+                    if(!res.ok) throw new Error("Hồ sơ không tồn tại!");
+                    return res.json();
+                })
+                .then(mate => {
+                    // Cập nhật thông tin cơ bản
+                    document.getElementById('mate-name').innerText = mate.name;
+                    document.getElementById('mate-major').innerText = `🎓 ${mate.major}`;
+                    document.getElementById('mate-bio').innerText = mate.bio;
+                    document.getElementById('mate-match').innerText = `✨ Phù hợp ${mate.matchPercent}`;
+                    
+                    const avatarElement = document.getElementById('mate-avatar');
+                    avatarElement.innerText = mate.avatarText;
+                    avatarElement.className = `profile-avatar rounded-circle mx-auto shadow-sm position-relative z-2 text-white ${mate.avatarColor}`;
+
+                    // Cập nhật thẻ thói quen
+                    const traitsContainer = document.getElementById('mate-traits-container');
+                    traitsContainer.innerHTML = '';
+                    
+                    mate.traits.forEach(trait => {
+                        // Tra cứu từ điển, nếu không có thì dùng icon mặc định 📌
+                        const details = traitDictionary[trait] || { icon: "📌", title: "Đặc điểm", desc: trait };
+                        
+                        traitsContainer.innerHTML += `
+                        <div class="col-md-6">
+                            <div class="habit-item h-100">
+                                <div class="habit-icon">${details.icon}</div>
+                                <div>
+                                    <h6 class="fw-bold mb-1 small text-dark">${details.title}</h6>
+                                    <span class="text-secondary small">${details.desc}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+
+                    // Cập nhật nút Chat
+                    const chatBtn = document.getElementById('mate-btn-chat');
+                    chatBtn.innerText = `💬 Bắt đầu trò chuyện với ${mate.name.split(' ').pop()}`; // Lấy tên cuối
+                    chatBtn.onclick = () => {
+                        window.location.href = `chat.html?name=${encodeURIComponent(mate.name)}`;
+                    };
+
+                    // Ẩn loading, hiện nội dung
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    document.getElementById('profile-content').style.display = 'block';
+                })
+                .catch(error => {
+                    document.getElementById('loading-spinner').innerHTML = `<h4 class="text-danger">❌ ${error.message}</h4>`;
+                });
+        });
     </script>
 </body>
 </html>

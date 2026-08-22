@@ -13,96 +13,76 @@
     <div id="navbar-placeholder"></div>
 
     <div class="container py-4" style="max-width: 1100px;">
+        
+        <!-- Nút quay lại -->
+        <button class="btn btn-light mb-4 shadow-sm fw-bold rounded-pill px-4" onclick="window.location.href='dashboard.html'">
+            ⬅️ Quay lại Bảng tin
+        </button>
 
-        <div class="row g-4">
+        <!-- Trạng thái Loading chờ tải dữ liệu -->
+        <div id="loading-spinner" class="text-center my-5">
+            <h4 class="text-muted">⏳ Đang tải thông tin phòng...</h4>
+        </div>
+
+        <!-- Nội dung chính (Sẽ bị ẩn cho đến khi API tải xong) -->
+        <div class="row g-4" id="room-content" style="display: none;">
 
             <div class="col-lg-7">
 
                 <div class="mb-3">
-                    <img id="main-photo" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800"
-                        class="main-room-img" alt="Phòng trọ">
+                    <!-- GẮN ID CHO ẢNH CHÍNH -->
+                    <img id="main-photo" src="" class="main-room-img w-100 rounded-4 shadow-sm" style="height: 400px; object-fit: cover;" alt="Phòng trọ">
                 </div>
 
+                <!-- Thư viện ảnh nhỏ (Tạm thời dùng tĩnh vì DB đang chỉ có 1 ảnh) -->
                 <div class="row g-2 mb-4">
                     <div class="col-3">
-                        <img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800"
-                            class="thumb-img active" onclick="changeImage(this)">
+                        <img id="thumb-1" src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800" class="thumb-img active w-100 rounded-3" style="height: 80px; object-fit: cover; cursor: pointer;" onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800" class="thumb-img"
-                            onclick="changeImage(this)">
+                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=800" class="thumb-img w-100 rounded-3" style="height: 80px; object-fit: cover; cursor: pointer;" onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800" class="thumb-img"
-                            onclick="changeImage(this)">
+                        <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800" class="thumb-img w-100 rounded-3" style="height: 80px; object-fit: cover; cursor: pointer;" onclick="changeImage(this)">
                     </div>
                     <div class="col-3">
-                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800"
-                            class="thumb-sm thumb-img" onclick="changeImage(this)">
+                        <img src="https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800" class="thumb-img w-100 rounded-3" style="height: 80px; object-fit: cover; cursor: pointer;" onclick="changeImage(this)">
                     </div>
                 </div>
 
-                <div class="card p-4 shadow-sm border-0 mb-4">
-                    <h3 class="fw-bold text-dark mb-2">Phòng ban công thoáng mát gần ĐH Nguyễn Tất Thành</h3>
-                    <p class="text-muted small mb-3">📍 123 Tôn Thất Thuyết, Phường 1, Quận 4, TP. HCM (Cách trường
-                        1.5km)</p>
+                <div class="card p-4 shadow-sm border-0 mb-4 rounded-4">
+                    <!-- GẮN ID CHO TIÊU ĐỀ VÀ ĐỊA CHỈ -->
+                    <h3 id="room-title" class="fw-bold text-dark mb-2">Đang tải tiêu đề...</h3>
+                    <p id="room-address" class="text-muted small mb-3">📍 Đang tải địa chỉ...</p>
                     <hr>
                     <h5 class="fw-bold mb-3">Mô tả chi tiết</h5>
                     <p class="text-secondary">
-                        Phòng trọ mới xây diện tích 25m², có gác lửng cao ráo không đụng đầu. Phòng có ban công rộng
-                        rãi, cửa sổ lớn đón ánh sáng tự nhiên rất thoáng mát và tiết kiệm điện. Khu vực an ninh, giờ
-                        giấc tự do không chung chủ, có camera giám sát 24/7.
+                        Phòng trọ mới xây diện tích 25m², có gác lửng cao ráo không đụng đầu. Phòng có ban công rộng rãi, cửa sổ lớn đón ánh sáng tự nhiên rất thoáng mát và tiết kiệm điện. Khu vực an ninh, giờ giấc tự do không chung chủ, có camera giám sát 24/7.
                     </p>
                 </div>
 
-                <div class="card p-4 shadow-sm border-0 mb-4">
+                <div class="card p-4 shadow-sm border-0 mb-4 rounded-4">
                     <h5 class="fw-bold mb-3">Tiện ích đi kèm</h5>
-                    <div class="row g-3">
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">❄️</span> <span>Máy điều hòa</span>
-                        </div>
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">🛵</span> <span>Chỗ để xe free</span>
-                        </div>
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">🌐</span> <span>Wifi tốc độ cao</span>
-                        </div>
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">🧺</span> <span>Máy giặt chung</span>
-                        </div>
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">🔑</span> <span>Giờ giấc tự do</span>
-                        </div>
-                        <div class="col-6 col-md-4 d-flex align-items-center">
-                            <span class="utility-icon">🛡️</span> <span>Camera an ninh</span>
-                        </div>
+                    <!-- GẮN ID ĐỂ BƠM TIỆN ÍCH VÀO -->
+                    <div class="row g-3" id="room-utilities">
+                        <!-- Tiện ích sẽ được JS đổ vào đây -->
                     </div>
                 </div>
-                <!-- ================= PHẦN MỚI: BẢN ĐỒ VỊ TRÍ ================= -->
-                <div class="card p-4 shadow-sm border-0 mb-4">
+
+                <!-- ================= PHẦN BẢN ĐỒ ================= -->
+                <div class="card p-4 shadow-sm border-0 mb-4 rounded-4">
                     <h5 class="fw-bold mb-2">📍 Vị trí trên bản đồ</h5>
                     <p class="text-secondary small mb-4">
-                        123 Tôn Thất Thuyết, Phường 1, Quận 4, TP.HCM <br>
-                        <span class="text-primary fw-medium">🚶 Cách ĐH Nguyễn Tất Thành 500m (Khoảng 5 phút đi bộ)</span>
+                        Khu vực xung quanh địa chỉ phòng trọ <br>
+                        <span class="text-primary fw-medium">🚶 Vị trí rất thuận lợi cho việc di chuyển</span>
                     </p>
-                    
-                    <!-- Khung chứa iFrame Google Maps -->
                     <div class="rounded-4 overflow-hidden shadow-sm" style="height: 300px; width: 100%;">
-                        <!-- Nhúng bản đồ ĐH Nguyễn Tất Thành cơ sở Quận 4 làm ví dụ -->
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.639739556272!2d106.70282117480467!3d10.762226889386343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f6c0d8dfbb1%3A0x6b8bc00947752e27!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOZ3V54buFbiBU4bqldCBUaMOgbmg!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s" 
-                            width="100%" 
-                            height="100%" 
-                            style="border:0;" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.639739556272!2d106.70282117480467!3d10.762226889386343!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f6c0d8dfbb1%3A0x6b8bc00947752e27!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBOZ3V54buFbiBU4bqldCBUaMOgbmg!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
-                <!-- ================= HẾT PHẦN BẢN ĐỒ ================= -->
-                <!-- ================= PHẦN MỚI: ĐÁNH GIÁ TỪ NGƯỜI DÙNG ================= -->
-                <div class="card p-4 shadow-sm border-0 mb-4">
+
+                <!-- ================= PHẦN ĐÁNH GIÁ (Tĩnh) ================= -->
+                <div class="card p-4 shadow-sm border-0 mb-4 rounded-4">
                     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
                         <h5 class="fw-bold mb-0">Đánh giá từ người thuê (12)</h5>
                         <div class="d-flex align-items-center gap-2">
@@ -110,14 +90,11 @@
                             <span class="fw-bold fs-4 text-dark">4.8</span>
                         </div>
                     </div>
-
                     <!-- Review 1 -->
                     <div class="mb-4 pb-4 border-bottom">
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center fw-bold small shadow-sm" style="width: 42px; height: 42px;">
-                                    NB
-                                </div>
+                                <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center fw-bold small shadow-sm" style="width: 42px; height: 42px;">NB</div>
                                 <div>
                                     <h6 class="fw-bold mb-0 text-dark small">Nguyễn Văn Bình <span class="badge bg-success-subtle text-success ms-1" style="font-size: 0.65rem;">Đã thuê</span></h6>
                                     <span class="text-muted" style="font-size: 0.75rem;">12/07/2026</span>
@@ -125,44 +102,21 @@
                             </div>
                             <div class="text-warning small">★★★★★</div>
                         </div>
-                        <p class="text-secondary small mb-0 lh-base">Phòng y hình, sạch sẽ và rất thoáng mát. Cô chủ nhà siêu thân thiện, tiền điện nước tính đúng giá nhà nước không ăn gian chữ nào. Rất đáng tiền nhé mọi người!</p>
+                        <p class="text-secondary small mb-0 lh-base">Phòng y hình, sạch sẽ và rất thoáng mát. Rất đáng tiền nhé mọi người!</p>
                     </div>
-
-                    <!-- Review 2 -->
-                    <div class="mb-4">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center fw-bold small shadow-sm" style="width: 42px; height: 42px;">
-                                    LT
-                                </div>
-                                <div>
-                                    <h6 class="fw-bold mb-0 text-dark small">Lê Thu Thảo <span class="badge bg-success-subtle text-success ms-1" style="font-size: 0.65rem;">Đã thuê</span></h6>
-                                    <span class="text-muted" style="font-size: 0.75rem;">05/06/2026</span>
-                                </div>
-                            </div>
-                            <div class="text-warning small">★★★★☆</div>
-                        </div>
-                        <p class="text-secondary small mb-0 lh-base">An ninh khu này rất tốt, có camera 24/7 nên để xe máy ở trệt không lo. Điểm trừ nhỏ xíu là wifi buổi tối thỉnh thoảng hơi chậm do nhiều phòng cùng xem phim.</p>
-                    </div>
-
-                    <!-- Nút viết đánh giá -->
                     <div class="mt-2 text-center">
-                        <button class="btn btn-outline-primary w-100 fw-bold rounded-pill py-2 shadow-sm" onclick="alert('🔒 Để đảm bảo tính minh bạch, hệ thống chỉ cho phép người đã từng thuê căn phòng này được viết đánh giá!')">
-                            ✍️ Viết đánh giá của bạn
-                        </button>
+                        <button class="btn btn-outline-primary w-100 fw-bold rounded-pill py-2 shadow-sm" onclick="alert('🔒 Để đảm bảo tính minh bạch, hệ thống chỉ cho phép người đã từng thuê căn phòng này được viết đánh giá!')">✍️ Viết đánh giá của bạn</button>
                     </div>
                 </div>
-                <!-- ================= HẾT PHẦN ĐÁNH GIÁ ================= -->
             </div>
 
             <div class="col-lg-5">
-                <div class="sticky-sidebar">
-
-                    <div class="card p-4 shadow-sm border-0 mb-4">
+                <div class="sticky-top" style="top: 20px;">
+                    <div class="card p-4 shadow-sm border-0 mb-4 rounded-4">
                         <div class="mb-3">
                             <span class="text-muted small">Giá thuê hàng tháng</span>
-                            <h2 class="text-primary fw-bold mb-0">3.500.000 <span
-                                    class="fs-6 text-muted font-normal">đ/tháng</span></h2>
+                            <!-- GẮN ID CHO GIÁ TIỀN -->
+                            <h2 id="room-price" class="text-primary fw-bold mb-0">Đang tải...</h2>
                         </div>
 
                         <div class="bg-light p-3 rounded-3 small text-secondary mb-4">
@@ -172,91 +126,123 @@
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-lg fw-bold rounded-pill py-3"
-                                onclick="window.location.href='chat.html'">
-                                💬 Nhắn tin trao đổi ngay
-                            </button>
-                            <button id="btn-save-room"
-                                class="btn btn-outline-secondary btn-lg fw-medium rounded-pill py-2"
-                                onclick="toggleSaveRoom()">
-                                🤍 Lưu vào danh sách
-                            </button>
+                            <!-- ĐÃ GẮN ID CHO NÚT CHAT -->
+                            <button id="btn-chat-owner" class="btn btn-primary btn-lg fw-bold rounded-pill py-3">💬 Nhắn tin trao đổi ngay</button>
+                            <button id="btn-save-room" class="btn btn-outline-secondary btn-lg fw-medium rounded-pill py-2" onclick="toggleSaveRoom()">🤍 Lưu vào danh sách</button>
                         </div>
                     </div>
 
-                    <div class="card p-4 shadow-sm border-0">
+                    <div class="card p-4 shadow-sm border-0 rounded-4">
                         <h5 class="fw-bold mb-3">Thông tin chủ phòng</h5>
                         <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4"
-                                style="width: 55px; height: 55px;">
-                                TL
-                            </div>
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 55px; height: 55px;">TL</div>
                             <div>
-                                <h6 class="fw-bold mb-1">Trần Thu Lan <span class="badge badge-kyc ms-1">✔️ Đã xác
-                                        thực</span></h6>
+                                <h6 class="fw-bold mb-1">Trần Thu Lan <span class="badge bg-success-subtle text-success ms-1 border border-success-subtle rounded-pill" style="font-size: 0.65rem;">✔️ Đã xác thực</span></h6>
                                 <p class="text-muted small mb-0">Tham gia UniMatch từ: Tháng 05/2026</p>
                             </div>
                         </div>
-                        <div
-                            class="bg-success-subtle text-success p-2.5 rounded-3 text-center small fw-medium border border-success-subtle">
+                        <div class="bg-success-subtle text-success p-2.5 rounded-3 text-center small fw-medium border border-success-subtle">
                             🛡️ Tài khoản chủ trọ đã qua kiểm duyệt E-KYC an toàn
                         </div>
                     </div>
-
                 </div>
             </div>
 
         </div>
     </div>
+
+    <!-- CÁC HÀM TƯƠNG TÁC GIAO DIỆN -->
     <script src="main.js"></script>
     <script>
-        // 1. Hàm xử lý Gallery ảnh: Bấm ảnh nhỏ, đổi ảnh to mượt mà
         function changeImage(thumbnailElement) {
-            // Lấy đường dẫn src của ảnh nhỏ vừa được click
             const newSrc = thumbnailElement.src;
-
-            // Tìm và thay đổi src của ảnh chính lớn
             const mainPhoto = document.getElementById('main-photo');
             mainPhoto.src = newSrc;
-
-            // Xóa class 'active' ở tất cả các ảnh nhỏ cũ
-            document.querySelectorAll('.thumb-img').forEach(thumb => {
-                thumb.classList.remove('active');
-            });
-
-            // Thêm class 'active' vào ảnh nhỏ vừa được bấm để hiện viền xanh
+            document.querySelectorAll('.thumb-img').forEach(thumb => thumb.classList.remove('active'));
             thumbnailElement.classList.add('active');
         }
 
-        // 2. Hàm xử lý nút Lưu phòng: Đổi trạng thái tim và chữ
         function toggleSaveRoom() {
             const btnSave = document.getElementById('btn-save-room');
-
-            // Kiểm tra trạng thái hiện tại dựa trên chữ hiển thị
             if (btnSave.innerHTML.includes('🤍')) {
-                // Đổi sang trạng thái Đã lưu
                 btnSave.innerHTML = '❤️ Đã lưu phòng này';
                 btnSave.classList.remove('btn-outline-secondary');
                 btnSave.classList.add('btn-outline-danger');
-                alert('Đã lưu phòng trọ này vào danh mục yêu thích của bạn!');
             } else {
-                // Đổi ngược lại trạng thái ban đầu
                 btnSave.innerHTML = '🤍 Lưu vào danh sách';
                 btnSave.classList.remove('btn-outline-danger');
                 btnSave.classList.add('btn-outline-secondary');
             }
         }
     </script>
-    <!-- Bãi đáp cho Footer -->
+    
     <div id="footer-placeholder"></div>
-
-    <!-- Script gọi file Footer -->
     <script>
         fetch('footer.html')
             .then(response => response.text())
-            .then(data => {
-                document.getElementById('footer-placeholder').innerHTML = data;
-            });
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+    </script>
+
+    <!-- ============================================== -->
+    <!-- KẾT NỐI API ĐỂ BƠM DỮ LIỆU ĐỘNG VÀO TRANG      -->
+    <!-- ============================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Đọc mã ID phòng trên đường link URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomId = urlParams.get('id');
+
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const roomContent = document.getElementById('room-content');
+
+            if (!roomId) {
+                loadingSpinner.innerHTML = '<h4 class="text-danger">⚠️ Lỗi: Không tìm thấy mã phòng! (Bạn hãy vào trang Bảng tin rồi bấm nút Xem chi tiết nhé)</h4>';
+                return;
+            }
+
+            // 2. Gửi mã ID lên Backend để lấy thông tin phòng về
+            fetch(`http://localhost:3000/api/rooms/${roomId}`)
+                .then(res => {
+                    if (!res.ok) throw new Error("Không tìm thấy phòng!");
+                    return res.json();
+                })
+                .then(room => {
+                    // 3. Thay đổi nội dung bằng dữ liệu thật từ DB
+                    document.getElementById('main-photo').src = room.image;
+                    document.getElementById('thumb-1').src = room.image; 
+                    
+                    document.getElementById('room-title').innerText = room.title;
+                    document.getElementById('room-address').innerText = `📍 ${room.address}`;
+                    document.getElementById('room-price').innerHTML = `${room.price} <span class="fs-6 text-muted fw-normal">/tháng</span>`;
+
+                    // Bơm danh sách tiện ích
+                    const utilitiesContainer = document.getElementById('room-utilities');
+                    utilitiesContainer.innerHTML = ''; // Dọn sạch
+                    room.utilities.forEach(util => {
+                        utilitiesContainer.innerHTML += `
+                            <div class="col-6 col-md-4 d-flex align-items-center">
+                                <span class="fs-5 me-2">✨</span> 
+                                <span class="fw-medium text-dark">${util}</span>
+                            </div>
+                        `;
+                    });
+
+                    // 4. BƠM LINK VÀO NÚT NHẮN TIN
+                    const chatBtn = document.getElementById('btn-chat-owner');
+                    chatBtn.onclick = () => {
+                        // Mang theo tên Chủ trọ và Tiêu đề phòng sang trang Chat
+                        window.location.href = `chat.html?name=Trần Thu Lan&room=${encodeURIComponent(room.title)}`;
+                    };
+
+                    // 5. Giấu icon loading, hiện trang chi tiết lên
+                    loadingSpinner.style.display = 'none';
+                    roomContent.style.display = 'flex';
+                })
+                .catch(error => {
+                    loadingSpinner.innerHTML = `<h4 class="text-danger">❌ ${error.message}</h4>`;
+                    console.error("Lỗi tải chi tiết phòng:", error);
+                });
+        });
     </script>
 </body>
 
